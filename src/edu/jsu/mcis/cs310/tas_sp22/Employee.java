@@ -6,17 +6,17 @@ import java.time.LocalTime;
 import java.util.HashMap;
 
 public class Employee {
-    Integer employeeId;
-    String badgeid;
-    String firstName;
-    String middleName;
-    String lastName;
-    Integer departmentId;
-    Integer shiftID;
-    LocalDate activeDate;
-    LocalTime activeTime;
-    LocalDate inactiveDate;
-    LocalTime inactiveTime;
+    private Integer employeeId;
+    private String badgeid;
+    private String firstName;
+    private String middleName;
+    private String lastName;
+    private Integer departmentId;
+    private Integer shiftID;
+    private LocalDate activeDate;
+    private LocalTime activeTime;
+    private LocalDate inactiveDate;
+    private LocalTime inactiveTime;
 
     public Employee(HashMap<String, String> Input) {
         this.employeeId = Integer.parseInt(Input.get("employeeId"));
@@ -27,7 +27,7 @@ public class Employee {
         this.departmentId = Integer.parseInt(Input.get("departmentId"));
         this.shiftID = Integer.parseInt(Input.get("shiftID"));
         this.activeDate = new LocalDate(Integer.parseInt(Input.get("year")), Integer.parseInt(Input.get("month")),
-                Integer.parseInt(Input.get("day")));
+        //Integer.parseInt(Input.get("day")));
 
     }
 
