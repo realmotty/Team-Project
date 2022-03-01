@@ -65,66 +65,63 @@ public class TestFeature1 {
 
         }
 
-    @Test
-    public void testGetShiftByID() {
-        /* Retrieve Shift Rulesets from Database */
-        Shift s1 = db.getShift(1);
-        Shift s2 = db.getShift(2);
-        Shift s3 = db.getShift(3);
-        /* Compare to Expected Values */
-        assertEquals("Shift 1: 07:00 - 15:30 (510 minutes); Lunch: 12:00 - 12:30 
-(30 minutes)", s1.toString());
-        assertEquals("Shift 2: 12:00 - 20:30 (510 minutes); Lunch: 16:30 - 17:00 
-(30 minutes)", s2.toString());
-        assertEquals("Shift 1 Early Lunch: 07:00 - 15:30 (510 minutes); Lunch: 
-11:30 - 12:00 (30 minutes)", s3.toString());
-    }
+        @Test
+        public void testGetShiftByID() {
+                /* Retrieve Shift Rulesets from Database */
+                Shift s1 = db.getShift(1);
+                Shift s2 = db.getShift(2);
+                Shift s3 = db.getShift(3);
+                /* Compare to Expected Values */
+                assertEquals("Shift 1: 07:00 - 15:30 (510 minutes); Lunch: 12:00 - 12:30 (30 minutes)", s1.toString());
 
-    @Test
-    public void testGetEmployeeByID() {
-        /* Retrieve Employees from Database */
-        Employee e1 = db.getEmployee(10);
-        Employee e2 = db.getEmployee(6);
-        Employee e3 = db.getEmployee(8);
-        Employee e4 = db.getEmployee(22);
-        Employee e5 = db.getEmployee(19);
-        Employee e6 = db.getEmployee(76);
-        /* Compare to Expected Values */
-        assertEquals("#12565C60 (Chapman, Joshua E): employeetypeid: 0, 
-departmentid: 5, shiftid: 1, active: 2015-09-11, inactive: none", e1.toString());
-        assertEquals("#0B8C3085 (King, Harry L): employeetypeid: 1, departmentid: 
-1, shiftid: 1, active: 2016-10-30, inactive: none", e2.toString());
-        assertEquals("#0FFA272B (Corwin, John L): employeetypeid: 1, departmentid: 
-7, shiftid: 1, active: 2015-10-11, inactive: none", e3.toString());
-        assertEquals("#2A972897 (White, Margaret M): employeetypeid: 0, 
-departmentid: 4, shiftid: 1, active: 2015-09-11, inactive: none", e4.toString());
-        assertEquals("#29C3C7D4 (Gomez, Rose M): employeetypeid: 0, departmentid: 
-1, shiftid: 1, active: 2015-11-02, inactive: none", e5.toString());
-        assertEquals("#9D527CFB (Rodriquez, Jarvis B): employeetypeid: 0, 
-departmentid: 8, shiftid: 1, active: 2015-09-22, inactive: none", e6.toString());
-    }
+                assertEquals("Shift 2: 12:00 - 20:30 (510 minutes); Lunch: 16:30 - 17:00 (30 minutes)", s2.toString());
+                assertEquals("Shift 1 Early Lunch: 07:00 - 15:30 (510 minutes); Lunch: 11:30 - 12:00 (30 minutes)",
+                                s3.toString());
+        }
 
-    @Test
-    public void testGetShiftByBadge() {
-        
-        /* Create Badge Objects */
-        
-        Badge b1 = db.getBadge("B6902696");
-        Badge b2 = db.getBadge("76E920D9");
-        Badge b3 = db.getBadge("4382D92D");
-        
-        /* Retrieve Shift Rulesets from Database */
-        Shift s1 = db.getShift(b1);
-        Shift s2 = db.getShift(b2);
-        Shift s3 = db.getShift(b3);
-        /* Compare to Expected Values */
-        assertEquals("Shift 1: 07:00 - 15:30 (510 minutes); Lunch: 12:00 - 12:30 
-(30 minutes)", s1.toString());
-        assertEquals("Shift 2: 12:00 - 20:30 (510 minutes); Lunch: 16:30 - 17:00 
-(30 minutes)", s2.toString());
-        assertEquals("Shift 1 Early Lunch: 07:00 - 15:30 (510 minutes); Lunch: 
-11:30 - 12:00 (30 minutes)", s3.toString());
-    }
+        @Test
+        public void testGetEmployeeByID() {
+                /* Retrieve Employees from Database */
+                Employee e1 = db.getEmployee(10);
+                Employee e2 = db.getEmployee(6);
+                Employee e3 = db.getEmployee(8);
+                Employee e4 = db.getEmployee(22);
+                Employee e5 = db.getEmployee(19);
+                Employee e6 = db.getEmployee(76);
+                /* Compare to Expected Values */
+                assertEquals("#12565C60 (Chapman, Joshua E): employeetypeid: 0, departmentid: 5, shiftid: 1, active: 2015-09-11, inactive: none",
+                                e1.toString());
+                assertEquals("#0B8C3085 (King, Harry L): employeetypeid: 1, departmentid: 1, shiftid: 1, active: 2016-10-30, inactive: none",
+                                e2.toString());
+                assertEquals("#0FFA272B (Corwin, John L): employeetypeid: 1, departmentid: 7, shiftid: 1, active: 2015-10-11, inactive: none",
+                                e3.toString());
+                assertEquals("#2A972897 (White, Margaret M): employeetypeid: 0, departmentid: 4, shiftid: 1, active: 2015-09-11, inactive: none",
+                                e4.toString());
+                assertEquals("#29C3C7D4 (Gomez, Rose M): employeetypeid: 0, departmentid: 1, shiftid: 1, active: 2015-11-02, inactive: none",
+                                e5.toString());
+                assertEquals("#9D527CFB (Rodriquez, Jarvis B): employeetypeid: 0, departmentid: 8, shiftid: 1, active: 2015-09-22, inactive: none",
+                                e6.toString());
+        }
+
+        @Test
+        public void testGetShiftByBadge() {
+
+                /* Create Badge Objects */
+
+                Badge b1 = db.getBadge("B6902696");
+                Badge b2 = db.getBadge("76E920D9");
+                Badge b3 = db.getBadge("4382D92D");
+
+                /* Retrieve Shift Rulesets from Database */
+                Shift s1 = db.getShift(b1);
+                Shift s2 = db.getShift(b2);
+                Shift s3 = db.getShift(b3);
+                /* Compare to Expected Values */
+                assertEquals("Shift 1: 07:00 - 15:30 (510 minutes); Lunch: 12:00 - 12:30 (30 minutes)", s1.toString());
+                assertEquals("Shift 2: 12:00 - 20:30 (510 minutes); Lunch: 16:30 - 17:00 (30 minutes)", s2.toString());
+                assertEquals("Shift 1 Early Lunch: 07:00 - 15:30 (510 minutes); Lunch:11:30 - 12:00 (30 minutes)",
+                                s3.toString());
+        }
 
     @Test
     public void testGetEmployeeByBadge() {
@@ -146,17 +143,11 @@ departmentid: 8, shiftid: 1, active: 2015-09-22, inactive: none", e6.toString())
         Employee e5 = db.getEmployee(b5);
         Employee e6 = db.getEmployee(b6);
         /* Compare to Expected Values */
-        assertEquals("#1B2052DE (Sanchez, Katherine H): employeetypeid: 1, 
-departmentid: 7, shiftid: 1, active: 2015-09-22, inactive: none", e1.toString());
-        assertEquals("#0886BF12 (Gibson, Theresa E): employeetypeid: 0, 
-departmentid: 1, shiftid: 1, active: 2015-08-14, inactive: none", e2.toString());
-        assertEquals("#29C03912 (McKain, Ethel H): employeetypeid: 1, departmentid:
-4, shiftid: 1, active: 2017-02-11, inactive: none", e3.toString());
-        assertEquals("#2CD387C2 (Horner, Nicholas M): employeetypeid: 1, 
-departmentid: 5, shiftid: 1, active: 2015-07-28, inactive: none", e4.toString());
-        assertEquals("#28DC3FB8 (Woods, Matthew S): employeetypeid: 1, 
-departmentid: 4, shiftid: 1, active: 2015-07-28, inactive: none", e5.toString());
-        assertEquals("#124A2DED (Ford, Nicholas R): employeetypeid: 0, 
-departmentid: 5, shiftid: 1, active: 2015-09-01, inactive: none", e6.toString());
+        assertEquals("#1B2052DE (Sanchez, Katherine H): employeetypeid: 1, departmentid: 7, shiftid: 1, active: 2015-09-22, inactive: none", e1.toString());
+        assertEquals("#0886BF12 (Gibson, Theresa E): employeetypeid: 0, departmentid: 1, shiftid: 1, active: 2015-08-14, inactive: none", e2.toString());
+        assertEquals("#29C03912 (McKain, Ethel H): employeetypeid: 1, departmentid:4, shiftid: 1, active: 2017-02-11, inactive: none", e3.toString());
+        assertEquals("#2CD387C2 (Horner, Nicholas M): employeetypeid: 1, departmentid: 5, shiftid: 1, active: 2015-07-28, inactive: none", e4.toString());
+        assertEquals("#28DC3FB8 (Woods, Matthew S): employeetypeid: 1, departmentid: 4, shiftid: 1, active: 2015-07-28, inactive: none", e5.toString());
+        assertEquals("#124A2DED (Ford, Nicholas R): employeetypeid: 0, departmentid: 5, shiftid: 1, active: 2015-09-01, inactive: none", e6.toString());
         
     }
