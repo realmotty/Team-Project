@@ -150,10 +150,22 @@ public class TASDatabase {
 
                 /* get timestamp and convert to LocalDateTime */
                 java.sql.Timestamp activetimestamp = resultset.getTimestamp("active");
-                LocalDateTime activeTime = activetimestamp.toLocalDateTime();
+                LocalDateTime activeTime;
+                if (activetimestamp != null) {
+
+                    activeTime = activetimestamp.toLocalDateTime();
+                } else {
+                    activeTime = null;
+                }
 
                 java.sql.Timestamp inactivetimestamp = resultset.getTimestamp("inactive");
-                LocalDateTime inactiveTime = inactivetimestamp.toLocalDateTime();
+                LocalDateTime inactiveTime;
+                if (inactivetimestamp != null) {
+
+                    inactiveTime = inactivetimestamp.toLocalDateTime();
+                } else {
+                    inactiveTime = null;
+                }
 
                 /* Populate the attribute map */
                 attributes.put("id", resultset.getObject("id"));
@@ -205,7 +217,9 @@ public class TASDatabase {
 
                 /* Get Results set */
                 resultset = pstSelect.getResultSet();
-                resultset.next();
+                if (resultset.next()) {
+                    
+                }
 
                 // map to hold parameters
                 HashMap<String, Object> attributes = new HashMap<String, Object>();
@@ -279,7 +293,7 @@ public class TASDatabase {
 
                 java.sql.Timestamp shiftstopTimestamp = resultset.getTimestamp("shiftstop");
                 LocalDateTime shiftstop = shiftstopTimestamp.toLocalDateTime();
-                LocalTime shiftStopTime = shiftstart.toLocalTime();
+                LocalTime shiftStopTime = shiftstop.toLocalTime();
 
                 java.sql.Timestamp lunchstartTimestamp = resultset.getTimestamp("lunchstart");
                 LocalDateTime lunchstart = lunchstartTimestamp.toLocalDateTime();
@@ -287,7 +301,7 @@ public class TASDatabase {
 
                 java.sql.Timestamp lunchstopTimestamp = resultset.getTimestamp("lunchstop");
                 LocalDateTime lunchstop = lunchstopTimestamp.toLocalDateTime();
-                LocalTime lunchStopTime = lunchstart.toLocalTime();
+                LocalTime lunchStopTime = lunchstop.toLocalTime();
                 /* Populate the attribute map */
 
                 attributes.put("id", resultset.getObject("id"));
@@ -298,7 +312,7 @@ public class TASDatabase {
                 attributes.put("graceperiod", resultset.getObject("graceperiod"));
                 attributes.put("dockpenalty", resultset.getObject("dockpenalty"));
                 attributes.put("lunchstart", lunchStartTime);
-                attributes.put("lunchstop", lunchStartTime);
+                attributes.put("lunchstop", lunchStopTime);
                 attributes.put("lunchthreshold", resultset.getObject("lunchthreshold"));
 
                 /* create Employee object */

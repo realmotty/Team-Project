@@ -9,7 +9,7 @@ public class TestFeature1 {
         @Before
         public void setup() {
 
-                db = new TASDatabase("tas_user", "warroomc", "localhost");
+                db = new TASDatabase("tasuser", "warroomc", "localhost");
 
         }
 
