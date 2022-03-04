@@ -26,9 +26,9 @@ public class Badge {
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
-        sb.append("Badge{id=").append(id);
-        sb.append(", description=").append(description);
-        sb.append('}');
+        sb.append("#").append(id);
+        sb.append(" (").append(description);
+        sb.append(')');
         return sb.toString();
     }
 

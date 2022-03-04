@@ -9,7 +9,7 @@ public class TestFeature1 {
         @Before
         public void setup() {
 
-                db = new TASDatabase();
+                db = new TASDatabase("tas_user", "warroomc", "localhost");
 
         }
 
@@ -151,3 +151,4 @@ public class TestFeature1 {
         assertEquals("#124A2DED (Ford, Nicholas R): employeetypeid: 0, departmentid: 5, shiftid: 1, active: 2015-09-01, inactive: none", e6.toString());
         
     }
+}

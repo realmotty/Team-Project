@@ -1,47 +1,43 @@
 
 package edu.jsu.mcis.cs310.tas_sp22;
 
-import java.time.LocalDate;
-import java.time.LocalTime;
+import java.time.LocalDateTime;
 import java.util.HashMap;
 
 public class Employee {
-    private Integer employeeId;
-    private String badgeid;
-    private String firstName;
-    private String middleName;
-    private String lastName;
-    private Integer departmentId;
-    private Integer shiftID;
-    private LocalDate activeDate;
-    private LocalTime activeTime;
-    private LocalDate inactiveDate;
-    private LocalTime inactiveTime;
+    private final Integer employeeId;
+    private final String badgeid;
+    private final String firstName;
+    private final String middleName;
+    private final String lastName;
+    private final Integer departmentId;
+    private final Integer shiftID;
+
+    public LocalDateTime getActiveTime() {
+        return activeTime;
+    }
+
+    public LocalDateTime getInactiveTime() {
+        return inactiveTime;
+    }
+    private final LocalDateTime activeTime;
+    private final LocalDateTime inactiveTime;
 
     /**
      * 
      * @param Input- Hash map containing the employee information
      */
-    public Employee(HashMap<String, String> Input) {
-        this.employeeId = Integer.parseInt(Input.get("employeeId"));
-        this.badgeid = Input.get("badgeid");
-        this.firstName = Input.get("firstName");
-        this.middleName = Input.get("middleName");
-        this.lastName = Input.get("lastName");
-        this.departmentId = Integer.parseInt(Input.get("departmentId"));
-        this.shiftID = Integer.parseInt(Input.get("shiftID"));
+    public Employee(HashMap<String, Object> Input) {
+        this.employeeId = (Integer) Input.get("employeeId");
+        this.badgeid = (String) Input.get("badgeid");
+        this.firstName = (String) Input.get("firstName");
+        this.middleName = (String) Input.get("middleName");
+        this.lastName = (String) Input.get("lastName");
+        this.departmentId = (Integer) Input.get("departmentId");
+        this.shiftID = (Integer) Input.get("shiftID");
 
-        this.activeDate = LocalDate.of(Integer.parseInt(Input.get("activeYear")),
-                Integer.parseInt(Input.get("activeMonth")),
-                Integer.parseInt(Input.get("activeDay")));
-        this.activeTime = LocalTime.of(Integer.parseInt(Input.get("activeHour")),
-                Integer.parseInt(Input.get("activeMinute")));
-
-        this.inactiveDate = LocalDate.of(Integer.parseInt(Input.get("inactiveYear")),
-                Integer.parseInt(Input.get("inactiveMonth")),
-                Integer.parseInt(Input.get("inactiveDay")));
-        this.inactiveTime = LocalTime.of(Integer.parseInt(Input.get("inactiveHour")),
-                Integer.parseInt(Input.get("inactiveMinute")));
+        this.activeTime = (LocalDateTime) Input.get("active");
+        this.inactiveTime = (LocalDateTime) Input.get("inactive");
 
     }
 
@@ -73,20 +69,6 @@ public class Employee {
         return shiftID;
     }
 
-    public LocalDate getActiveDate() {
-        return activeDate;
-    }
-
-    public LocalTime getActiveTime() {
-        return activeTime;
-    }
-
-    public LocalDate getInactiveDate() {
-        return inactiveDate;
-    }
-
-    public LocalTime getInactiveTime() {
-        return inactiveTime;
-    }
+    
 
 }

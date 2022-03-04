@@ -3,6 +3,7 @@ package edu.jsu.mcis.cs310.tas_sp22;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
 
 public class Punch {
 
@@ -92,8 +93,12 @@ public class Punch {
         }
 
         public String printOriginal() {
+                DateTimeFormatter format = DateTimeFormatter.ofPattern("EEE MM-dd-yyyy HH:mm:ss");
+
                 StringBuilder sb = new StringBuilder();
-                sb.append("#").append(badge.getId());
+                sb.append("#").append(badge.getId()).append(" ");
+                sb.append(punchType).append(": ");
+                sb.append(punchTime.format(format));
 
                 return sb.toString();
 

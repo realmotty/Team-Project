@@ -2,6 +2,7 @@ package edu.jsu.mcis.cs310.tas_sp22;
 
 import java.sql.*;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.HashMap;
 import org.json.simple.*;
 import org.json.simple.parser.*;
@@ -15,7 +16,11 @@ public class TASDatabase {
 
     }
 
-    // get punch
+    /**
+     * 
+     * @param punchId
+     * @return
+     */
     public Punch getPunch(int punchId) {
         ResultSet resultset = null;
         boolean hasresults;
@@ -54,9 +59,6 @@ public class TASDatabase {
                 result = new Punch(id, terminalId, badgeid, eventTime, eventtypeid);
 
                 /* Close connections */
-                resultset.close();
-                pstSelect.close();
-                connection.close();
 
             }
 
@@ -68,15 +70,319 @@ public class TASDatabase {
 
     }
 
-    // get badge
+    /**
+     * 
+     * @param badgeId
+     * @return
+     */
+    public Badge getBadge(String badgeId) {
+        ResultSet resultset = null;
+        boolean hasresults;
+        Badge result = null;
+        String query = null;
+        PreparedStatement pstSelect = null;
 
-    // get employee
+        try {
+            /* Prepare Select Query */
+            query = "SELECT * FROM badge b WHERE id = ?";
+            pstSelect = connection.prepareStatement(query);
+            pstSelect.setString(1, badgeId);
+
+            /* Execute Select Query */
+            hasresults = pstSelect.execute();
+
+            /* Check for Results */
+            if (hasresults) {
+
+                /* Get Results set */
+                resultset = pstSelect.getResultSet();
+                resultset.next();
+
+                /* Get individual columsn from result set */
+                String id = resultset.getString("id");
+                String description = resultset.getString("description");
+
+                /* create Badge object */
+                result = new Badge(id, description);
+
+                /* Close connections */
+
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return result;
+
+    }
+
+    /**
+     * 
+     * @param employeeId
+     * @return
+     */
+    public Employee getEmployee(int employeeId) {
+        ResultSet resultset = null;
+        boolean hasresults;
+        Employee result = null;
+        String query = null;
+        PreparedStatement pstSelect = null;
+
+        try {
+            /* Prepare Select Query */
+            query = "SELECT * FROM employee e WHERE id = ?";
+            pstSelect = connection.prepareStatement(query);
+            pstSelect.setInt(1, employeeId);
+
+            /* Execute Select Query */
+            hasresults = pstSelect.execute();
+
+            /* Check for Results */
+            if (hasresults) {
+
+                /* Get Results set */
+                resultset = pstSelect.getResultSet();
+                resultset.next();
+
+                // map to hold parameters
+                HashMap<String, Object> attributes = new HashMap<String, Object>();
+
+                /* get timestamp and convert to LocalDateTime */
+                java.sql.Timestamp activetimestamp = resultset.getTimestamp("active");
+                LocalDateTime activeTime = activetimestamp.toLocalDateTime();
+
+                java.sql.Timestamp inactivetimestamp = resultset.getTimestamp("inactive");
+                LocalDateTime inactiveTime = inactivetimestamp.toLocalDateTime();
+
+                /* Populate the attribute map */
+                attributes.put("id", resultset.getObject("id"));
+                attributes.put("badgeid", resultset.getObject("badgeid"));
+                attributes.put("firstname", resultset.getObject("firstname"));
+                attributes.put("middlename", resultset.getObject("middlename"));
+                attributes.put("lastname", resultset.getObject("lastname"));
+                attributes.put("employeetypeid", resultset.getObject("employeetypeid"));
+                attributes.put("departmentid", resultset.getObject("departmentid"));
+                attributes.put("shiftid", resultset.getObject("shiftid"));
+                attributes.put("id", resultset.getObject("id"));
+                attributes.put("active", activeTime);
+                attributes.put("inactive", inactiveTime);
+
+                /* create Employee object */
+                result = new Employee(attributes);
+
+                /* Close connections */
+
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return result;
+
+    }
 
     // get employee 2
+    public Employee getEmployee(Badge badgeId) {
+        ResultSet resultset = null;
+        boolean hasresults;
+        Employee result = null;
+        String query = null;
+        PreparedStatement pstSelect = null;
+
+        try {
+            /* Prepare Select Query */
+            query = "SELECT * FROM employee e WHERE badgeid = ?";
+            pstSelect = connection.prepareStatement(query);
+            pstSelect.setString(1, badgeId.getId());
+
+            /* Execute Select Query */
+            hasresults = pstSelect.execute();
+
+            /* Check for Results */
+            if (hasresults) {
+
+                /* Get Results set */
+                resultset = pstSelect.getResultSet();
+                resultset.next();
+
+                // map to hold parameters
+                HashMap<String, Object> attributes = new HashMap<String, Object>();
+
+                /* get timestamp and convert to LocalDateTime */
+                java.sql.Timestamp activetimestamp = resultset.getTimestamp("active");
+                LocalDateTime activeTime = activetimestamp.toLocalDateTime();
+
+                java.sql.Timestamp inactivetimestamp = resultset.getTimestamp("inactive");
+                LocalDateTime inactiveTime = inactivetimestamp.toLocalDateTime();
+
+                /* Populate the attribute map */
+                attributes.put("id", resultset.getObject("id"));
+                attributes.put("badgeid", resultset.getObject("badgeid"));
+                attributes.put("firstname", resultset.getObject("firstname"));
+                attributes.put("middlename", resultset.getObject("middlename"));
+                attributes.put("lastname", resultset.getObject("lastname"));
+                attributes.put("employeetypeid", resultset.getObject("employeetypeid"));
+                attributes.put("departmentid", resultset.getObject("departmentid"));
+                attributes.put("shiftid", resultset.getObject("shiftid"));
+                attributes.put("id", resultset.getObject("id"));
+                attributes.put("active", activeTime);
+                attributes.put("inactive", inactiveTime);
+
+                /* create Employee object */
+                result = new Employee(attributes);
+
+                /* Close connections */
+
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return result;
+
+    }
 
     // get shift
+    public Shift getShift(int ShiftId) {
+        ResultSet resultset = null;
+        boolean hasresults;
+        Shift result = null;
+        String query = null;
+        PreparedStatement pstSelect = null;
 
-    // get shift 2
+        try {
+            /* Prepare Select Query */
+            query = "SELECT * FROM shift s WHERE id = ?";
+            pstSelect = connection.prepareStatement(query);
+            pstSelect.setInt(1, ShiftId);
+
+            /* Execute Select Query */
+            hasresults = pstSelect.execute();
+
+            /* Check for Results */
+            if (hasresults) {
+
+                /* Get Results set */
+                resultset = pstSelect.getResultSet();
+                resultset.next();
+
+                // map to hold parameters
+                HashMap<String, Object> attributes = new HashMap<String, Object>();
+
+                /* get timestamp and convert to LocalDateTime */
+                java.sql.Timestamp shiftstartTimestamp = resultset.getTimestamp("shiftstart");
+                LocalDateTime shiftstart = shiftstartTimestamp.toLocalDateTime();
+                LocalTime shiftStartTime = shiftstart.toLocalTime();
+
+                java.sql.Timestamp shiftstopTimestamp = resultset.getTimestamp("shiftstop");
+                LocalDateTime shiftstop = shiftstopTimestamp.toLocalDateTime();
+                LocalTime shiftStopTime = shiftstart.toLocalTime();
+
+                java.sql.Timestamp lunchstartTimestamp = resultset.getTimestamp("lunchstart");
+                LocalDateTime lunchstart = lunchstartTimestamp.toLocalDateTime();
+                LocalTime lunchStartTime = lunchstart.toLocalTime();
+
+                java.sql.Timestamp lunchstopTimestamp = resultset.getTimestamp("lunchstop");
+                LocalDateTime lunchstop = lunchstopTimestamp.toLocalDateTime();
+                LocalTime lunchStopTime = lunchstart.toLocalTime();
+                /* Populate the attribute map */
+
+                attributes.put("id", resultset.getObject("id"));
+                attributes.put("description", resultset.getObject("description"));
+                attributes.put("shiftstart", shiftStartTime);
+                attributes.put("shiftstop", shiftStopTime);
+                attributes.put("roundinterval", resultset.getObject("roundinterval"));
+                attributes.put("graceperiod", resultset.getObject("graceperiod"));
+                attributes.put("dockpenalty", resultset.getObject("dockpenalty"));
+                attributes.put("lunchstart", lunchStartTime);
+                attributes.put("lunchstop", lunchStartTime);
+                attributes.put("lunchthreshold", resultset.getObject("lunchthreshold"));
+
+                /* create Employee object */
+                result = new Shift(attributes);
+
+                /* Close connections */
+
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return result;
+
+    }
+
+    /**
+     * 
+     * @param badgeId
+     * @return
+     */
+    public Shift getShift(Badge badgeId) {
+        ResultSet resultset = null;
+        boolean hasresults;
+        Shift result = null;
+        String query = null;
+        PreparedStatement pstSelect = null;
+
+        try {
+            Employee employee = getEmployee(badgeId);
+
+            /* Prepare Select Query */
+            query = "SELECT * FROM shift s WHERE id = ?";
+            pstSelect = connection.prepareStatement(query);
+            pstSelect.setInt(1, employee.getShiftID());
+
+            /* Execute Select Query */
+            hasresults = pstSelect.execute();
+
+            /* Check for Results */
+            if (hasresults) {
+
+                /* Get Results set */
+                resultset = pstSelect.getResultSet();
+                resultset.next();
+
+                // map to hold parameters
+                HashMap<String, Object> attributes = new HashMap<String, Object>();
+
+                /* get timestamp and convert to LocalDateTime */
+                java.sql.Timestamp activetimestamp = resultset.getTimestamp("active");
+                LocalDateTime activeTime = activetimestamp.toLocalDateTime();
+
+                java.sql.Timestamp inactivetimestamp = resultset.getTimestamp("inactive");
+                LocalDateTime inactiveTime = inactivetimestamp.toLocalDateTime();
+
+                /* Populate the attribute map */
+                attributes.put("id", resultset.getObject("id"));
+                attributes.put("badgeid", resultset.getObject("badgeid"));
+                attributes.put("firstname", resultset.getObject("firstname"));
+                attributes.put("middlename", resultset.getObject("middlename"));
+                attributes.put("lastname", resultset.getObject("lastname"));
+                attributes.put("employeetypeid", resultset.getObject("employeetypeid"));
+                attributes.put("departmentid", resultset.getObject("departmentid"));
+                attributes.put("shiftid", resultset.getObject("shiftid"));
+                attributes.put("id", resultset.getObject("id"));
+                attributes.put("active", activeTime);
+                attributes.put("inactive", inactiveTime);
+
+                /* create Employee object */
+                result = new Shift(attributes);
+
+                /* Close connections */
+
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return result;
+
+    }
 
     /* PRIVATE METHODS */
 
@@ -94,7 +400,7 @@ public class TASDatabase {
             try {
 
                 String url = "jdbc:mysql://" + a
-                        + "/jsu_sp22_v1?autoReconnect=true&useSSL=false&zeroDateTimeBehavior=EXCEPTION&serverTimezone=America/Chicago";
+                        + "/tas_sp22_v1?autoReconnect=true&useSSL=false&zeroDateTimeBehavior=EXCEPTION&serverTimezone=America/Chicago";
                 // System.err.println("Connecting to " + url + " ...");
 
                 c = DriverManager.getConnection(url, u, p);
@@ -109,63 +415,4 @@ public class TASDatabase {
 
     }
 
-    private String getResultSetAsJSON(ResultSet resultset) {
-
-        String result;
-
-        /* Create JSON Containers */
-
-        JSONArray json = new JSONArray();
-        JSONArray keys = new JSONArray();
-
-        try {
-
-            /* Get Metadata */
-
-            ResultSetMetaData metadata = resultset.getMetaData();
-            int columnCount = metadata.getColumnCount();
-
-            /* Get Keys */
-
-            for (int i = 1; i <= columnCount; ++i) {
-
-                keys.add(metadata.getColumnLabel(i));
-
-            }
-
-            /* Get ResultSet Data */
-
-            while (resultset.next()) {
-
-                /* Create JSON Container for New Row */
-
-                JSONObject row = new JSONObject();
-
-                /* Get Row Data */
-
-                for (int i = 1; i <= columnCount; ++i) {
-
-                    /* Get Value; Pair with Key */
-
-                    Object value = resultset.getObject(i);
-                    row.put(keys.get(i - 1), String.valueOf(value));
-
-                }
-
-                /* Add Row Data to Collection */
-
-                json.add(row);
-
-            }
-
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
-        /* Encode JSON Data and Return */
-
-        result = JSONValue.toJSONString(json);
-        return result;
-
-    }
 }
