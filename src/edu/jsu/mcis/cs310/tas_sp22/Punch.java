@@ -52,7 +52,30 @@ public class Punch {
 
         }
 
-        // todo add other constructor
+        /**
+         * 
+         * @param id
+         * @param terminalId
+         * @param badgeid
+         * @param timestamp
+         * @param punchTypeId
+         */
+        Punch(int id, int terminalId, String badgeid, LocalDateTime timestamp, int punchTypeId) {
+                this.id = id;
+                this.terminalId = terminalId;
+                this.badge = new Badge(badgeid);
+                this.punchTime = timestamp;
+                /* set punch type enum based of (int)punchTypeId */
+                switch (punchTypeId) {
+                        case 0:
+                                this.punchType = PunchType.CLOCK_OUT;
+                        case 1:
+                                this.punchType = PunchType.CLOCK_IN;
+                        case 2:
+                                this.punchType = PunchType.TIME_OUT;
+                }
+
+        }
 
         @Override
         public String toString() {
