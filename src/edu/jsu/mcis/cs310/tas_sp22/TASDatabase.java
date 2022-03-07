@@ -123,7 +123,7 @@ public class TASDatabase {
      * @return
      */
     public Employee getEmployee(int employeeId) {
-        
+
         Employee result = null;
 
         try {
@@ -140,7 +140,7 @@ public class TASDatabase {
 
                 /* Get Results set */
                 ResultSet resultset = pstSelect.getResultSet();
-                
+
                 if (resultset.next()) {
 
                     // map to hold parameters
@@ -157,9 +157,9 @@ public class TASDatabase {
                     attributes.put("shiftid", resultset.getInt("shiftid"));
                     attributes.put("id", String.valueOf(employeeId));
                     attributes.put("active", resultset.getTimestamp("active").toLocalDateTime());
-                    
+
                     java.sql.Timestamp inactive = resultset.getTimestamp("inactive");
-                    
+
                     if (inactive != null) {
                         attributes.put("inactive", inactive.toLocalDateTime());
                     }
@@ -181,7 +181,7 @@ public class TASDatabase {
 
     // get employee 2
     public Employee getEmployee(Badge badgeId) {
-        
+
         Employee result = null;
 
         try {
@@ -199,10 +199,10 @@ public class TASDatabase {
                 /* Get Results set */
                 ResultSet resultset = pstSelect.getResultSet();
                 if (resultset.next()) {
-                    
+
                     int id = resultset.getInt("id");
                     result = getEmployee(id);
-                    
+
                 }
 
             }
@@ -244,31 +244,32 @@ public class TASDatabase {
 
                 /* get timestamp and convert to LocalDateTime */
                 java.sql.Timestamp shiftstartTimestamp = resultset.getTimestamp("shiftstart");
-                LocalDateTime shiftstart = shiftstartTimestamp.toLocalDateTime();
-                LocalTime shiftStartTime = shiftstart.toLocalTime();
+                if (shiftstartTimestamp != null) {
+                    attributes.put("shiftstart", shiftstartTimestamp.toLocalDateTime().toLocalTime());
+                }
 
                 java.sql.Timestamp shiftstopTimestamp = resultset.getTimestamp("shiftstop");
-                LocalDateTime shiftstop = shiftstopTimestamp.toLocalDateTime();
-                LocalTime shiftStopTime = shiftstop.toLocalTime();
+                if (shiftstartTimestamp != null) {
+                    attributes.put("shiftstop", shiftstopTimestamp.toLocalDateTime().toLocalTime());
+                }
 
                 java.sql.Timestamp lunchstartTimestamp = resultset.getTimestamp("lunchstart");
-                LocalDateTime lunchstart = lunchstartTimestamp.toLocalDateTime();
-                LocalTime lunchStartTime = lunchstart.toLocalTime();
+                if (shiftstartTimestamp != null) {
+                    attributes.put("lunchstart", lunchstartTimestamp.toLocalDateTime().toLocalTime());
+                }
 
                 java.sql.Timestamp lunchstopTimestamp = resultset.getTimestamp("lunchstop");
-                LocalDateTime lunchstop = lunchstopTimestamp.toLocalDateTime();
-                LocalTime lunchStopTime = lunchstop.toLocalTime();
+                if (shiftstartTimestamp != null) {
+                    attributes.put("lunchstop", lunchstopTimestamp.toLocalDateTime().toLocalTime());
+                }
+
                 /* Populate the attribute map */
 
                 attributes.put("id", resultset.getObject("id"));
                 attributes.put("description", resultset.getObject("description"));
-                attributes.put("shiftstart", shiftStartTime);
-                attributes.put("shiftstop", shiftStopTime);
                 attributes.put("roundinterval", resultset.getObject("roundinterval"));
                 attributes.put("graceperiod", resultset.getObject("graceperiod"));
                 attributes.put("dockpenalty", resultset.getObject("dockpenalty"));
-                attributes.put("lunchstart", lunchStartTime);
-                attributes.put("lunchstop", lunchStopTime);
                 attributes.put("lunchthreshold", resultset.getObject("lunchthreshold"));
 
                 /* create Employee object */
@@ -292,60 +293,32 @@ public class TASDatabase {
      * @return
      */
     public Shift getShift(Badge badgeId) {
-        ResultSet resultset = null;
-        boolean hasresults;
         Shift result = null;
-        String query = null;
-        PreparedStatement pstSelect = null;
 
         try {
             Employee employee = getEmployee(badgeId);
 
             /* Prepare Select Query */
-            query = "SELECT * FROM shift s WHERE id = ?";
-            pstSelect = connection.prepareStatement(query);
+            String query = "SELECT * FROM shift s WHERE id = ?";
+            PreparedStatement pstSelect = connection.prepareStatement(query);
             pstSelect.setInt(1, employee.getShiftID());
 
             /* Execute Select Query */
-            hasresults = pstSelect.execute();
+            Boolean hasresults = pstSelect.execute();
 
             /* Check for Results */
             if (hasresults) {
 
                 /* Get Results set */
-                resultset = pstSelect.getResultSet();
-                resultset.next();
+                ResultSet resultset = pstSelect.getResultSet();
+                if (resultset.next()) {
 
-                // map to hold parameters
-                HashMap<String, Object> attributes = new HashMap<String, Object>();
+                    int id = resultset.getInt("id");
+                    result = getShift(id);
 
-                /* get timestamp and convert to LocalDateTime */
-                java.sql.Timestamp activetimestamp = resultset.getTimestamp("active");
-                LocalDateTime activeTime = activetimestamp.toLocalDateTime();
-
-                java.sql.Timestamp inactivetimestamp = resultset.getTimestamp("inactive");
-                LocalDateTime inactiveTime = inactivetimestamp.toLocalDateTime();
-
-                /* Populate the attribute map */
-                attributes.put("id", resultset.getObject("id"));
-                attributes.put("badgeid", resultset.getObject("badgeid"));
-                attributes.put("firstname", resultset.getObject("firstname"));
-                attributes.put("middlename", resultset.getObject("middlename"));
-                attributes.put("lastname", resultset.getObject("lastname"));
-                attributes.put("employeetypeid", resultset.getObject("employeetypeid"));
-                attributes.put("departmentid", resultset.getObject("departmentid"));
-                attributes.put("shiftid", resultset.getObject("shiftid"));
-                attributes.put("id", resultset.getObject("id"));
-                attributes.put("active", activeTime);
-                attributes.put("inactive", inactiveTime);
-
-                /* create Employee object */
-                result = new Shift(attributes);
-
-                /* Close connections */
+                }
 
             }
-
         } catch (Exception e) {
             e.printStackTrace();
         }

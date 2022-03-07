@@ -43,11 +43,11 @@ public class Shift {
 
         StringBuilder sb = new StringBuilder();
         sb.append("Shift ").append(id).append(": ");
-        sb.append(shiftStart.format(format)).append(" - ");
+        sb.append(shiftStart.format(format)).append(" / ");
         sb.append(shiftStop.format(format)).append(" (");
         sb.append(shiftLength).append(" minutes); ");
 
-        sb.append("Lunch: ").append(lunchStart.format(format)).append(" - ");
+        sb.append("Lunch: ").append(lunchStart.format(format)).append(" / ");
         sb.append(lunchStop.format(format)).append(" (");
         sb.append(lunchLength).append(" minutes); ");
 

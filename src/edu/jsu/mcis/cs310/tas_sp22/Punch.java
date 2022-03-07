@@ -36,10 +36,15 @@ public class Punch {
                 switch (punchTypeId) {
                         case 0:
                                 this.punchType = PunchType.CLOCK_OUT;
+                                break;
                         case 1:
                                 this.punchType = PunchType.CLOCK_IN;
+                                break;
                         case 2:
                                 this.punchType = PunchType.TIME_OUT;
+                                break;
+                        default:
+                                this.punchType = null;
                 }
 
                 /* default values */
@@ -70,10 +75,15 @@ public class Punch {
                 switch (punchTypeId) {
                         case 0:
                                 this.punchType = PunchType.CLOCK_OUT;
+                                break;
                         case 1:
                                 this.punchType = PunchType.CLOCK_IN;
+                                break;
                         case 2:
                                 this.punchType = PunchType.TIME_OUT;
+                                break;
+                        default:
+                                this.punchType = null;
                 }
 
         }
@@ -93,14 +103,15 @@ public class Punch {
         }
 
         public String printOriginal() {
-                DateTimeFormatter format = DateTimeFormatter.ofPattern("EEE MM-dd-yyyy HH:mm:ss");
+                DateTimeFormatter format = DateTimeFormatter.ofPattern("EEE MM/dd/yyyy HH:mm:ss");
 
                 StringBuilder sb = new StringBuilder();
                 sb.append("#").append(badge.getId()).append(" ");
                 sb.append(punchType).append(": ");
-                sb.append(punchTime.format(format));
-
-                return sb.toString();
+                sb.append(punchTime.format(format).toUpperCase());
+                String result = sb.toString();
+                // result.toUpperCase();
+                return result;
 
         }
 }

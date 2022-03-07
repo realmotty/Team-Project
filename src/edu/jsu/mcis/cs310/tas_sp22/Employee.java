@@ -20,6 +20,7 @@ public class Employee {
     public LocalDateTime getInactiveTime() {
         return inactiveTime;
     }
+
     private final LocalDateTime activeTime;
     private final LocalDateTime inactiveTime;
 
@@ -69,6 +70,15 @@ public class Employee {
         return shiftID;
     }
 
-    
+    @Override
+    public String toString() {
+        StringBuilder sb = new StringBuilder();
+        sb.append("#").append(employeeId);
+        sb.append(" (").append(lastName).append(",");
+        sb.append(firstName).append(middleName).append("): ");
+        sb.append("employeetypeid: ").append(" ");
+
+        return sb.toString();
+    }
 
 }
