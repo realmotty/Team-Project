@@ -242,7 +242,7 @@ public class TASDatabase {
                 // map to hold parameters
                 HashMap<String, Object> attributes = new HashMap<String, Object>();
 
-                /* get timestamp and convert to LocalDateTime */
+                /* get timestamp and convert to LocalTime */
                 java.sql.Timestamp shiftstartTimestamp = resultset.getTimestamp("shiftstart");
                 if (shiftstartTimestamp != null) {
                     attributes.put("shiftstart", shiftstartTimestamp.toLocalDateTime().toLocalTime());

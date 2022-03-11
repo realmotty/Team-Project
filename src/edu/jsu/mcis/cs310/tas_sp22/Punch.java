@@ -110,7 +110,6 @@ public class Punch {
                 sb.append(punchType).append(": ");
                 sb.append(punchTime.format(format).toUpperCase());
                 String result = sb.toString();
-                // result.toUpperCase();
                 return result;
 
         }
