@@ -155,7 +155,6 @@ public class TASDatabase {
                     attributes.put("employeetypeid", resultset.getInt("employeetypeid"));
                     attributes.put("departmentid", resultset.getInt("departmentid"));
                     attributes.put("shiftid", resultset.getInt("shiftid"));
-                    attributes.put("id", String.valueOf(employeeId));
                     attributes.put("active", resultset.getTimestamp("active").toLocalDateTime());
 
                     java.sql.Timestamp inactive = resultset.getTimestamp("inactive");
@@ -167,6 +166,13 @@ public class TASDatabase {
                     /* create Employee object */
                     result = new Employee(attributes);
 
+                    /* DEBUGGING LOG INFO */
+                    System.out.println("Attributes for each employee from Query");
+                    attributes.entrySet().forEach(entry -> {
+                        System.out.println(entry.getKey() + " => " + entry.getValue());
+                    });
+
+                    System.out.println("\n\n");
                 }
 
             }
