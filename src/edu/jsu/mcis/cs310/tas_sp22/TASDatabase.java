@@ -15,6 +15,21 @@ public class TASDatabase {
         this.connection = openConnection(username, password, address);
 
     }
+    /* INSERT METHODS */
+
+    /**
+     * 
+     * @param p Punch to be inserted
+     * @return default value 0 == punch failed the authorization check, or if an
+     *         error occurred during the insertion process;
+     */
+    public int insertPunch(Punch p) {
+        int newPunchID = 0;
+
+        return newPunchID;
+    }
+
+    /* GET METHODS */
 
     /**
      * 
