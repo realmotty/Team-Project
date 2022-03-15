@@ -119,7 +119,7 @@ public class TestFeature1 {
                 /* Compare to Expected Values */
                 assertEquals("Shift 1: 07:00 - 15:30 (510 minutes); Lunch: 12:00 - 12:30 (30 minutes)", s1.toString());
                 assertEquals("Shift 2: 12:00 - 20:30 (510 minutes); Lunch: 16:30 - 17:00 (30 minutes)", s2.toString());
-                assertEquals("Shift 1 Early Lunch: 07:00 - 15:30 (510 minutes); Lunch:11:30 - 12:00 (30 minutes)",
+                assertEquals("Shift 1 Early Lunch: 07:00 - 15:30 (510 minutes); Lunch: 11:30 - 12:00 (30 minutes)",
                                 s3.toString());
         }
 
@@ -145,7 +145,7 @@ public class TestFeature1 {
         /* Compare to Expected Values */
         assertEquals("#1B2052DE (Sanchez, Katherine H): employeetypeid: 1, departmentid: 7, shiftid: 1, active: 2015-09-22, inactive: none", e1.toString());
         assertEquals("#0886BF12 (Gibson, Theresa E): employeetypeid: 0, departmentid: 1, shiftid: 1, active: 2015-08-14, inactive: none", e2.toString());
-        assertEquals("#29C03912 (McKain, Ethel H): employeetypeid: 1, departmentid:4, shiftid: 1, active: 2017-02-11, inactive: none", e3.toString());
+        assertEquals("#29C03912 (McKain, Ethel H): employeetypeid: 1, departmentid: 4, shiftid: 1, active: 2017-02-11, inactive: none", e3.toString());
         assertEquals("#2CD387C2 (Horner, Nicholas M): employeetypeid: 1, departmentid: 5, shiftid: 1, active: 2015-07-28, inactive: none", e4.toString());
         assertEquals("#28DC3FB8 (Woods, Matthew S): employeetypeid: 1, departmentid: 4, shiftid: 1, active: 2015-07-28, inactive: none", e5.toString());
         assertEquals("#124A2DED (Ford, Nicholas R): employeetypeid: 0, departmentid: 5, shiftid: 1, active: 2015-09-01, inactive: none", e6.toString());
