@@ -431,7 +431,7 @@ public class TASDatabase {
         Department employeeDepartment = getDepartment(punchEmployee.getDepartmentId());
 
         // make sure the terminal id of the punch is valid for that employess department
-        if (employeeDepartment.getTerminalId() == p.getTerminalid()) {
+        if (employeeDepartment.getTerminalId() == p.getTerminalid() || p.getTerminalid() == 0) {
             validPunch = true;
         }
         return validPunch;
