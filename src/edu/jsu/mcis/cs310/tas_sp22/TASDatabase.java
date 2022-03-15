@@ -333,6 +333,39 @@ public class TASDatabase {
 
     }
 
+    public Department getDepartment(int departmentid) {
+        Department result = null;
+
+        try {
+
+            /* Prepare Select Query */
+            String query = "SELECT * FROM department d WHERE id = ?";
+            PreparedStatement pstSelect = connection.prepareStatement(query);
+            pstSelect.setInt(1, departmentid);
+
+            /* Execute Select Query */
+            Boolean hasresults = pstSelect.execute();
+
+            /* Check for Results */
+            if (hasresults) {
+
+                /* Get Results set */
+                ResultSet resultset = pstSelect.getResultSet();
+                if (resultset.next()) {
+
+                    result = new Department(resultset.getInt("id"), resultset.getString("description"),
+                            resultset.getInt("terminalid"));
+
+                }
+
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return result;
+    }
+
     /* PRIVATE METHODS */
 
     private Connection openConnection(String u, String p, String a) {
