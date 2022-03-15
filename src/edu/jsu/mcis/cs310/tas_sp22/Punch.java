@@ -88,6 +88,24 @@ public class Punch {
 
         }
 
+        // Getters
+
+        public Badge getBadge() {
+                return this.badge;
+        }
+
+        public LocalDateTime getOriginalTimestamp() {
+                return this.punchTime;
+        }
+
+        public int getTerminalid() {
+                return this.terminalId;
+        }
+
+        public PunchType getPunchtype() {
+                return this.punchType;
+        }
+
         @Override
         public String toString() {
                 StringBuilder sb = new StringBuilder();
