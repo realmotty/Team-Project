@@ -49,7 +49,7 @@ public class Punch {
 
                 /* default values */
 
-                this.punchTime = LocalDateTime.now();
+                this.punchTime = LocalDateTime.now().withNano(0);
                 this.adjustmentType = null;
                 this.ajustedPunchTime = null;
                 this.id = 0;
