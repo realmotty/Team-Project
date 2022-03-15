@@ -11,6 +11,10 @@ public class Department {
                 this.terminalId = terminalId;
         }
 
+        public int getTerminalId() {
+                return terminalId;
+        }
+
         @Override
         public String toString() {
                 StringBuilder sb = new StringBuilder();

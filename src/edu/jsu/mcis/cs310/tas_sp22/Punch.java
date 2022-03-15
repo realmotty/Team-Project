@@ -33,7 +33,7 @@ public class Punch {
                 this.punchTypeid = punchTypeId;
 
                 /* set punch type enum based of (int)punchTypeId */
-                switch (punchTypeId) {
+                switch (this.punchTypeid) {
                         case 0:
                                 this.punchType = PunchType.CLOCK_OUT;
                                 break;
@@ -54,7 +54,6 @@ public class Punch {
                 this.ajustedPunchTime = null;
                 this.id = 0;
 
-                this.punchType = null;
 
         }
 
@@ -104,6 +103,10 @@ public class Punch {
 
         public PunchType getPunchtype() {
                 return this.punchType;
+        }
+
+        public int getPunchtypeID() {
+                return punchTypeid;
         }
 
         @Override
