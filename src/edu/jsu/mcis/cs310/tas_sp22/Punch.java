@@ -56,7 +56,6 @@ public class Punch {
                 this.ajustedPunchTime = null;
                 this.id = 0;
 
-                this.punchType = null;
 
         }
 
