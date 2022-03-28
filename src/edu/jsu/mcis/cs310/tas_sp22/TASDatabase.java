@@ -1,9 +1,13 @@
 package edu.jsu.mcis.cs310.tas_sp22;
 
 import java.sql.*;
+import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
 import java.util.HashMap;
+
+import javax.naming.spi.DirStateFactory.Result;
 import org.json.simple.*;
 import org.json.simple.parser.*;
 
@@ -15,6 +19,52 @@ public class TASDatabase {
         this.connection = openConnection(username, password, address);
 
     }
+    /* INSERT METHODS */
+
+    /**
+     * 
+     * @param p Punch to be inserted
+     * @return default value 0 == punch failed the authorization check, or if an
+     *         error occurred during the insertion process;
+     */
+    public int insertPunch(Punch p) {
+        int newPunchID = 0;
+        if (authorizPunch(p)) {
+            int updateCount;
+            String query;
+            PreparedStatement pstUpdate = null;
+            try {
+
+                /* Prepare Insert Query */
+                query = "INSERT INTO tas_sp22_v1.event (terminalid, badgeid, timestamp, eventtypeid) VALUES(?,?,?,?);";
+                pstUpdate = connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
+                pstUpdate.setInt(1, p.getTerminalid());
+                pstUpdate.setString(2, p.getBadge().getId());
+
+                pstUpdate.setTimestamp(3, java.sql.Timestamp.valueOf(p.getOriginalTimestamp()));
+
+                pstUpdate.setInt(4, p.getPunchtypeID());
+
+                /* Execute Insert Query */
+                int rowsAffected = pstUpdate.executeUpdate();
+                /* update results to show amount of records effected */
+
+                if (rowsAffected > 0) {
+                    ResultSet key = pstUpdate.getGeneratedKeys();
+                    if (key.next()) {
+                        newPunchID = key.getInt(1);
+                    }
+
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+        return newPunchID;
+
+    }
+
+    /* GET METHODS */
 
     /**
      * 
@@ -69,6 +119,7 @@ public class TASDatabase {
         return result;
 
     }
+
     public ArrayList<Punch> getDailyPunchList(Badge badge, LocalDate date) {
 
             ArrayList<Punch> punches = new ArrayList<>();
@@ -378,7 +429,58 @@ public class TASDatabase {
 
     }
 
+    public Department getDepartment(int departmentid) {
+        Department result = null;
+
+        try {
+
+            /* Prepare Select Query */
+            String query = "SELECT * FROM department d WHERE id = ?";
+            PreparedStatement pstSelect = connection.prepareStatement(query);
+            pstSelect.setInt(1, departmentid);
+
+            /* Execute Select Query */
+            Boolean hasresults = pstSelect.execute();
+
+            /* Check for Results */
+            if (hasresults) {
+
+                /* Get Results set */
+                ResultSet resultset = pstSelect.getResultSet();
+                if (resultset.next()) {
+
+                    result = new Department(resultset.getInt("id"), resultset.getString("description"),
+                            resultset.getInt("terminalid"));
+
+                }
+
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return result;
+    }
+
     /* PRIVATE METHODS */
+
+    /**
+     * 
+     * @param p punch to be authorized
+     * @return true if punch is authorized; false if otherwise;
+     */
+    private Boolean authorizPunch(Punch p) {
+        boolean validPunch = false;
+        // get department of the punch
+        Employee punchEmployee = getEmployee(p.getBadge());
+        Department employeeDepartment = getDepartment(punchEmployee.getDepartmentId());
+
+        // make sure the terminal id of the punch is valid for that employess department
+        if (employeeDepartment.getTerminalId() == p.getTerminalid() || p.getTerminalid() == 0) {
+            validPunch = true;
+        }
+        return validPunch;
+    }
 
     private Connection openConnection(String u, String p, String a) {
 

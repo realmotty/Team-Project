@@ -33,7 +33,8 @@ public class Punch {
                 this.punchTypeid = punchTypeId;
 
                 /* set punch type enum based of (int)punchTypeId */
-                switch (punchTypeId) {
+                switch (this.punchTypeid) {
+
                         case 0:
                                 this.punchType = PunchType.CLOCK_OUT;
                                 break;
@@ -49,7 +50,8 @@ public class Punch {
 
                 /* default values */
 
-                this.punchTime = LocalDateTime.now();
+
+                this.punchTime = LocalDateTime.now().withNano(0);
                 this.adjustmentType = null;
                 this.ajustedPunchTime = null;
                 this.id = 0;
@@ -87,6 +89,29 @@ public class Punch {
                 }
 
         }
+
+        // Getters
+
+        public Badge getBadge() {
+                return this.badge;
+        }
+
+        public LocalDateTime getOriginalTimestamp() {
+                return this.punchTime;
+        }
+
+        public int getTerminalid() {
+                return this.terminalId;
+        }
+
+        public PunchType getPunchtype() {
+                return this.punchType;
+        }
+
+        public int getPunchtypeID() {
+                return punchTypeid;
+        }
+
 
         @Override
         public String toString() {
