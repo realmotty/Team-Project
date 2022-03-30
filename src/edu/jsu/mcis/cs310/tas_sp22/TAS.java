@@ -5,11 +5,16 @@
  */
 package edu.jsu.mcis.cs310.tas_sp22;
 
+import java.util.ArrayList;
+
 /**
  *
  * @author Jonathan Carter
  */
 public class TAS {
+    public static int calculateTotalMinutes(ArrayList<Punch> dailypunchlist, Shift shift){
+                
+}
     public static void main(String[] args) {
         TASDatabase db = new TASDatabase("tasuser", "warroomc", "localhost");
 
@@ -31,3 +36,8 @@ public class TAS {
     }
 
 }
+
+
+   
+            
+
