@@ -136,6 +136,7 @@ public class TASDatabase {
 
             // query = "SELECT * FROM event e WHERE badgeid = "4E6E296E" AND timestamp =
             // "2018-08-01 05:49:24";"
+
             query = "SELECT * DATE(`timestamp`) AS tsdate FROM event WHERE badgeid = ? HAVING tsdate = ? ORDER BY `timestamp`";
             pstSelect = connection.prepareStatement(query);
             pstSelect.setString(1, badge.getId());
@@ -157,7 +158,7 @@ public class TASDatabase {
 
             }
 
-            else {
+            else { 
 
             }
         } catch (Exception e) {
@@ -512,5 +513,7 @@ public class TASDatabase {
         return c;
 
     }
+
+
 
 }
