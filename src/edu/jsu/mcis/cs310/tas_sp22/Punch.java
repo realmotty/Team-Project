@@ -96,29 +96,33 @@ public class Punch {
          * @param S Shift to use for adjustment
          */
         public void adjust(Shift S) {
+                // Check type of punch
+                // if clock in punch:
+                // checking to see if punch in time is before Shift start
+                if (this.punchTime.toLocalTime().isBefore(S.shiftStart)) {
+                        // the scheduled shift start
+                        // make the grace localtime for before the shift
 
-                if (this.punchTime.toLocalTime().isBefore(S.shiftStart)) { // checking to see if punch in time is before
-                                                                           // the scheduled shift start
-
-                        // what ever needs done
-                        // make the grace localtime\
                         // check if clock in before grace period
                         // if clock before punish]
                         // else adjust with rules
                 }
-                // ; seeing when the shift starts
-                // this.adjustmentType; the type of punch in
-                // this.ajustedPunchTime; the time in which the person clocked in
+                // else check to see if punch is after Shift start
+                        // check if in shift start grace period
+                                // appropriate action
 
-                // shift end 9
+                          // chekc if in lunch stop grace period
+                                // appropriate action
 
-                // this.start 8;45
-                // this.clockout 9;20
-                // if shift.clockinTime is over 15 before this.shiftclockintime then adjust with
-                // punishment
-
-                // create a loacldatetime for the shift start then copy it
-
+                        // else punch right on time
+                // if clock out punch
+                         // check if before shift clock out
+                                 // check if in lunch grace period
+                                // check if in early clock out grace period
+                         // check if after shift clock out
+                                // check if in late clock out grace period
+        
+        
         }
 
         // Getters
