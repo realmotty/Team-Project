@@ -67,6 +67,7 @@ public class Punch {
          * @param timestamp
          * @param punchTypeId
          */
+
         Punch(int id, int terminalId, String badgeid, LocalDateTime timestamp, int punchTypeId) {
                 this.id = id;
                 this.terminalId = terminalId;
@@ -86,6 +87,13 @@ public class Punch {
                         default:
                                 this.punchType = null;
                 }
+
+        }
+
+        //adjust punch times
+        // todo for feature 4
+        public void adjust (Shift S){
+
 
         }
 
