@@ -96,9 +96,10 @@ public class Punch {
         public void adjust (Shift S){
 
          if(this.punchTime.toLocalTime().isBefore(S.shiftStart)){ // checking to see if punch in time is before the scheduled shift start
+
                  //what ever needs done
                  //make the grace localtime\
-                 //check if clock in before 
+                 //check if clock in before grace period
                  //if clock before punish]
                  //else adjust with rules
          }
