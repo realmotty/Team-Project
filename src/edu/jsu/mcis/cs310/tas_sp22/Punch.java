@@ -50,12 +50,10 @@ public class Punch {
 
                 /* default values */
 
-
                 this.punchTime = LocalDateTime.now().withNano(0);
                 this.adjustmentType = null;
                 this.ajustedPunchTime = null;
                 this.id = 0;
-
 
         }
 
@@ -90,30 +88,36 @@ public class Punch {
 
         }
 
-        //adjust punch times
+        // adjust punch times
         // todo for feature 4
+        /**
+         * Adjust Punch time based on company ruleset for early,late, and missed punches
+         * 
+         * @param S Shift to use for adjustment
+         */
+        public void adjust(Shift S) {
 
-        public void adjust (Shift S){
+                if (this.punchTime.toLocalTime().isBefore(S.shiftStart)) { // checking to see if punch in time is before
+                                                                           // the scheduled shift start
 
-         if(this.punchTime.toLocalTime().isBefore(S.shiftStart)){ // checking to see if punch in time is before the scheduled shift start
+                        // what ever needs done
+                        // make the grace localtime\
+                        // check if clock in before grace period
+                        // if clock before punish]
+                        // else adjust with rules
+                }
+                // ; seeing when the shift starts
+                // this.adjustmentType; the type of punch in
+                // this.ajustedPunchTime; the time in which the person clocked in
 
-                 //what ever needs done
-                 //make the grace localtime\
-                 //check if clock in before grace period
-                 //if clock before punish]
-                 //else adjust with rules
-         }
-         //; seeing when the shift starts
-        // this.adjustmentType; the type of punch in 
-        // this.ajustedPunchTime; the time in which the person clocked in 
+                // shift end 9
 
-        //shift end 9
+                // this.start 8;45
+                // this.clockout 9;20
+                // if shift.clockinTime is over 15 before this.shiftclockintime then adjust with
+                // punishment
 
-        //this.start 8;45
-        //this.clockout 9;20
-        //if shift.clockinTime is over 15 before this.shiftclockintime then adjust with punishment
-
-        //create a loacldatetime for the shift start then copy it
+                // create a loacldatetime for the shift start then copy it
 
         }
 
@@ -138,7 +142,6 @@ public class Punch {
         public int getPunchtypeID() {
                 return punchTypeid;
         }
-
 
         @Override
         public String toString() {
