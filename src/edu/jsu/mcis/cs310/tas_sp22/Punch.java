@@ -96,10 +96,16 @@ public class Punch {
          * @param S Shift to use for adjustment
          */
         public void adjust(Shift S) {
+
                 // Check type of punch
                 // if clock in punch:
                 // checking to see if punch in time is before Shift start
+
                 if (this.punchTime.toLocalTime().isBefore(S.shiftStart)) {
+
+                       // S.shiftStart =        
+                        S.gracePeriod = 15; 
+                        
                         // the scheduled shift start
                         // make the grace localtime for before the shift
 
@@ -107,7 +113,16 @@ public class Punch {
                         // if clock before punish]
                         // else adjust with rules
                 }
-                // else check to see if punch is after Shift start
+                else if (this.punchTime.toLocalTime().isAfter(S.shiftStart)){ 
+
+                        // else check to see if punch is after Shift start
+
+                        if (this.punchTime.toLocalTime().isBefore(S.gracePeriod) //BAD CODE TRYING TO FIX
+                                
+                } 
+
+
+                        
                         // check if in shift start grace period
                                 // appropriate action
 
