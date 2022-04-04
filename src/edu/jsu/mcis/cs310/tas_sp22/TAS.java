@@ -12,6 +12,7 @@ import java.util.ArrayList;
  * @author Jonathan Carter
  */
 public class TAS {
+
     public static int calculateTotalMinutes(ArrayList<Punch> dailypunchlist, Shift shift) {
         // including lunch = 4 punches
         // not including lunch = 2 punches
@@ -26,12 +27,20 @@ public class TAS {
         for (Punch punch : dailypunchlist) {
 
             // see what kind of punch
-
             // if clock in punch
-            // current start punchh = this punch
+            if (punch.getPunchtype() == PunchType.CLOCK_IN) {
+
+                // current start punchh = this punch
+            }
             // if clock out punch
-            // cuurrent end punchj = this punch
+            else if (punch.getPunchtype() == PunchType.CLOCK_OUT) {
+
+                // cuurrent end punchj = this punch
+            }
             // if time out punch
+            else if (punch.getPunchtype() == PunchType.TIME_OUT) {
+
+            }
 
             // if clock in and clock ouut not null then calculate minutes add to minute
             // counter and null out the values of clock in and clock out
