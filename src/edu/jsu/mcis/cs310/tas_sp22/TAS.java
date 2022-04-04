@@ -28,6 +28,7 @@ public class TAS {
 
             // see what kind of punch
             // if clock in punch
+            // todo replace with switch statement
             if (punch.getPunchtype() == PunchType.CLOCK_IN) {
 
                 // current start punchh = this punch
@@ -41,16 +42,17 @@ public class TAS {
             else if (punch.getPunchtype() == PunchType.TIME_OUT) {
                 // renull the values
             }
+            // todo end switch conversion
 
-            if(startPeriod != null || endPeriod != null){
-                //calucalte minute and add to counter
-                //renull the values
+            if (startPeriod != null || endPeriod != null) {
+                // calucalte minute and add to counter
+                // renull the values
             }
 
             // if clock in and clock ouut not null then calculate minutes add to minute
             // counter and null out the values of clock in and clock out
         }
-
+        return dailyMinutes;
     }
 
     public static void main(String[] args) {

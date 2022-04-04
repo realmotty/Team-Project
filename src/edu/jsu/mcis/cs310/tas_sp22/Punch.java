@@ -1,8 +1,6 @@
 package edu.jsu.mcis.cs310.tas_sp22;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 
 public class Punch {
@@ -108,21 +106,20 @@ public class Punch {
                         // else adjust with rules
                 }
                 // else check to see if punch is after Shift start
-                        // check if in shift start grace period
-                                // appropriate action
+                // check if in shift start grace period
+                // appropriate action
 
-                          // chekc if in lunch stop grace period
-                                // appropriate action
+                // chekc if in lunch stop grace period
+                // appropriate action
 
-                        // else punch right on time
+                // else punch right on time
                 // if clock out punch
-                         // check if before shift clock out
-                                 // check if in lunch grace period
-                                // check if in early clock out grace period
-                         // check if after shift clock out
-                                // check if in late clock out grace period
-        
-        
+                // check if before shift clock out
+                // check if in lunch grace period
+                // check if in early clock out grace period
+                // check if after shift clock out
+                // check if in late clock out grace period
+
         }
 
         // Getters
