@@ -12,8 +12,29 @@ import java.util.ArrayList;
  * @author Jonathan Carter
  */
 public class TAS {
-    public static int calculateTotalMinutes(ArrayList<Punch> dailypunchlist, Shift shift){
+    public static int calculateTotalMinutes(ArrayList<Punch> dailypunchlist, Shift shift) {
+        //including lunch  = 4 punches
+        //not including lunch = 2 punches 
+        //if minutes work is enough and only two punches add artificial lunch (minus his lunch minutes for the shift)
+        
+        //loop through all daily punches
+            //see what kind of punch
+            
+                //if clock in punch
+                    //current start punchh = this punch
+                //if clock out punch
+                    //cuurrent end punchj = this punch
+                //if time out punch
                 
+                //if clock in and clock ouut not null then calculate minutes add to minute counter and null out the values of clock in and clock out
+                
+            
+
+
+
+
+
+
 }
     public static void main(String[] args) {
         TASDatabase db = new TASDatabase("tasuser", "warroomc", "localhost");
