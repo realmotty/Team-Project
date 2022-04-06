@@ -157,10 +157,29 @@ public class TASDatabase {
                 }
 
             }
+            
+            query = "SELECT *, DATE(`timestamp`) AS tsdate FROM event WHERE badgeid='4E6E296E' HAVING tsdate>'2018-08-01' ORDER BY `timestamp` LIMIT 1";
+            pstSelect = connection.prepareStatement(query);
+            pstSelect.setString(1, badge.getId());
+            pstSelect.setString(2, date.toString());
 
-            else { 
+            hasresults = pstSelect.execute();
+
+            if (hasresults) {
+
+                resultset = pstSelect.getResultSet();
+
+                while (resultset.next()) {
+                    
+                    int id = resultset.getInt("id");
+                    Punch p = getPunch(id);
+                    punches.add(p);
+
+                }
 
             }
+
+            
         } catch (Exception e) {
             e.printStackTrace();
         }
