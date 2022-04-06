@@ -6,31 +6,64 @@
 package edu.jsu.mcis.cs310.tas_sp22;
 
 import java.util.ArrayList;
-import org.junit.*;
-import static org.junit.Assert.*;
+
 /**
  *
  * @author Jonathan Carter
  */
 public class TAS {
-    public static int calculateTotalMinutes(ArrayList<Punch> dailypunchlist, Shift shift){
-           int CLOCK_IN = 0;
-           int CLOCK_OUT = 0;
-           int TIME_OUT = 0;
-           
-           
-        for (Punch punch: ){
-            switch (punch.getPunchtypeID()){
-                case 0: 
-                    out = punch
+
+    public static int calculateTotalMinutes(ArrayList<Punch> dailypunchlist, Shift shift) {
+        // including lunch = 4 punches
+        // not including lunch = 2 punches
+
+        // if minutes work is enough and only two punches add artificial lunch (minus
+        // his lunch minutes for the shift)
+        Punch startPeriod = null;
+        Punch endPeriod = null;
+        int dailyMinutes = 0;
+
+        // loop through all daily punches
+        for (Punch punch : dailypunchlist) {
+
+            // see what kind of punch
+            // if clock in punch
+            // todo replace with switch statement
+            if (punch.getPunchtype() == PunchType.CLOCK_IN) {
+
+                startPeriod = punch; // current start punchh = this punch
+            } 
+            // if clock out punch
+            else if (punch.getPunchtype() == PunchType.CLOCK_OUT) {
+
+                endPeriod = punch;// cuurrent end punchj = this punch
             }
-        
+            // if time out punch
+            else if (punch.getPunchtype() == PunchType.TIME_OUT) {
+                startPeriod = null;
+                  endPeriod = null;// renull the values
+            }
+            // todo end switch conversion
+
+            if (startPeriod != null || endPeriod != null) {
+                  startPeriod = null;
+                endPeriod = null;// renull the values
+            }
+
+            if(startPeriod != null || endPeriod != null){
+                dailyMinutes = ( dailyMinutes / 1000) * 60;
+                startPeriod = null;
+                endPeriod = null;
+                // calucalte minute and add to counter
+                // renull the values
+            }
+
+            // if clock in and clock ouut not null then calculate minutes add to minute
+            // counter and null out the values of clock in and clock out
+        }
+        return dailyMinutes;
     }
-           
-           
-}
-    
-    
+
     public static void main(String[] args) {
         TASDatabase db = new TASDatabase("tasuser", "warroomc", "localhost");
 
@@ -52,8 +85,3 @@ public class TAS {
     }
 
 }
-
-
-   
-            
-
