@@ -33,21 +33,33 @@ public class TAS {
             if (punch.getPunchtype() == PunchType.CLOCK_IN) {
 
                 // current start punchh = this punch
+                startPeriod = punch;
             }
             // if clock out punch
             else if (punch.getPunchtype() == PunchType.CLOCK_OUT) {
 
                 // cuurrent end punchj = this punch
+                endPeriod = punch;
+                if (startPeriod != null || endPeriod != null) {
+                    isPair = true;
+                }
             }
             // if time out punch
             else if (punch.getPunchtype() == PunchType.TIME_OUT) {
                 // renull the values
+                startPeriod = null;
+                endPeriod = null;
             }
             // todo end switch conversion
 
             if (isPair) {
                 // calucalte minute and add to counter
+
                 // renull the values
+                startPeriod = null;
+                endPeriod = null;
+                // make pair flag false again
+                isPair = false;
             }
 
             // if clock in and clock ouut not null then calculate minutes add to minute
