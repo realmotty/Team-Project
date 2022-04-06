@@ -1,3 +1,7 @@
+<<<<<<< HEAD
+=======
+
+>>>>>>> 0be54989e06ddc29eba2ba609149cb2aaed07e7b
 package edu.jsu.mcis.cs310.tas_sp22;
 
 import java.time.LocalDate;
@@ -106,8 +110,9 @@ public class Punch {
 
                 if (this.punchTime.toLocalTime().isBefore(S.shiftStart)) {
 
-                        // S.shiftStart =        
-                        S.gracePeriod.isBefore(15) // now shift the shift start time accordingly 
+                        // S.shiftStart =  
+                              
+                        S.gracePeriod.isBefore // now shift the shift start time accordingly 
                         
                         // the scheduled shift start
                         // make the grace localtime for before the shift
