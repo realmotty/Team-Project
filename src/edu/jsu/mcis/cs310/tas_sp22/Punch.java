@@ -137,11 +137,12 @@ public class Punch {
                                 
                         } 
                         
-                        // check if in shift start grace period
+                         if (this.punchTime.toLocalTime().isBefore(S.shiftStart)){  // check if in shift start grace period
                         // appropriate action
                         
-                        // chekc if in lunch stop grace period
+                        if (this.punchTime.toLocalTime().isBefore(S.lunchStop)) {}  // chekc if in lunch stop grace period
                         // appropriate action
+
                         
                         // else punch right on time
                 }
