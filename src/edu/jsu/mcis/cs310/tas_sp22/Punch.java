@@ -1,177 +1,3 @@
-<<<<<<< HEAD
-package edu.jsu.mcis.cs310.tas_sp22;
-
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
-
-public class Punch {
-
-        private int id;
-
-        private int punchTypeid;
-        private int terminalId;
-        private Badge badge;
-
-        private String adjustmentType;
-        private LocalDateTime punchTime;
-        private LocalDateTime ajustedPunchTime;
-
-        private PunchType punchType;
-
-        /**
-         * Construct instance with not from database
-         * 
-         * @param terminalId
-         * @param badge
-         * @param punchTypeId
-         */
-        Punch(int terminalId, Badge badge, int punchTypeId) {
-
-                this.terminalId = terminalId;
-                this.badge = badge;
-                this.punchTypeid = punchTypeId;
-
-                /* set punch type enum based of (int)punchTypeId */
-                switch (this.punchTypeid) {
-
-                        case 0:
-                                this.punchType = PunchType.CLOCK_OUT;
-                                break;
-                        case 1:
-                                this.punchType = PunchType.CLOCK_IN;
-                                break;
-                        case 2:
-                                this.punchType = PunchType.TIME_OUT;
-                                break;
-                        default:
-                                this.punchType = null;
-                }
-
-                /* default values */
-
-                this.punchTime = LocalDateTime.now().withNano(0);
-                this.adjustmentType = null;
-                this.ajustedPunchTime = null;
-                this.id = 0;
-
-        }
-
-        /**
-         * 
-         * @param id
-         * @param terminalId
-         * @param badgeid
-         * @param timestamp
-         * @param punchTypeId
-         */
-
-        Punch(int id, int terminalId, String badgeid, LocalDateTime timestamp, int punchTypeId) {
-                this.id = id;
-                this.terminalId = terminalId;
-                this.badge = new Badge(badgeid);
-                this.punchTime = timestamp;
-                /* set punch type enum based of (int)punchTypeId */
-                switch (punchTypeId) {
-                        case 0:
-                                this.punchType = PunchType.CLOCK_OUT;
-                                break;
-                        case 1:
-                                this.punchType = PunchType.CLOCK_IN;
-                                break;
-                        case 2:
-                                this.punchType = PunchType.TIME_OUT;
-                                break;
-                        default:
-                                this.punchType = null;
-                }
-
-        }
-
-        // adjust punch times
-        // todo for feature 4
-        /**
-         * Adjust Punch time based on company ruleset for early,late, and missed punches
-         * 
-         * @param S Shift to use for adjustment
-         */
-        public void adjust(Shift S) {
-                // Check type of punch
-                // if clock in punch:
-                // checking to see if punch in time is before Shift start
-                if (this.punchTime.toLocalTime().isBefore(S.shiftStart)) {
-                        // the scheduled shift start
-                        // make the grace localtime for before the shift
-
-                        // check if clock in before grace period
-                        // if clock before punish]
-                        // else adjust with rules
-                }
-                // else check to see if punch is after Shift start
-                // check if in shift start grace period
-                // appropriate action
-
-                // chekc if in lunch stop grace period
-                // appropriate action
-
-                // else punch right on time
-                // if clock out punch
-                // check if before shift clock out
-                // check if in lunch grace period
-                // check if in early clock out grace period
-                // check if after shift clock out
-                // check if in late clock out grace period
-
-        }
-
-        // Getters
-
-        public Badge getBadge() {
-                return this.badge;
-        }
-
-        public LocalDateTime getOriginalTimestamp() {
-                return this.punchTime;
-        }
-
-        public int getTerminalid() {
-                return this.terminalId;
-        }
-
-        public PunchType getPunchtype() {
-                return this.punchType;
-        }
-
-        public int getPunchtypeID() {
-                return punchTypeid;
-        }
-
-        @Override
-        public String toString() {
-                StringBuilder sb = new StringBuilder();
-                sb.append("Punch{id=").append(id);
-                sb.append(", punchTypeid=").append(punchTypeid);
-                sb.append(", terminalId=").append(terminalId);
-                sb.append(", badge=").append(badge);
-                sb.append(", adjustmentType=").append(adjustmentType);
-                sb.append(", punchTime=").append(punchTime);
-                sb.append(", ajustedPunchTime=").append(ajustedPunchTime);
-                sb.append('}');
-                return sb.toString();
-        }
-
-        public String printOriginal() {
-                DateTimeFormatter format = DateTimeFormatter.ofPattern("EEE MM/dd/yyyy HH:mm:ss");
-
-                StringBuilder sb = new StringBuilder();
-                sb.append("#").append(badge.getId()).append(" ");
-                sb.append(punchType).append(": ");
-                sb.append(punchTime.format(format).toUpperCase());
-                String result = sb.toString();
-                return result;
-
-        }
-}
-=======
 package edu.jsu.mcis.cs310.tas_sp22;
 
 import java.time.LocalDate;
@@ -275,15 +101,20 @@ public class Punch {
                 // if clock in punch:
                 // checking to see if punch in time is before Shift start
 
+                //Store adjusted timestamp into "adjustedtimestamp" = LocalDateTime
+                //Store a description of which rule triggers the adjustment in a String
+
                 if (this.punchTime.toLocalTime().isBefore(S.shiftStart)) {
 
-                       // S.shiftStart =        
-                        S.gracePeriod = 15; 
+                        // S.shiftStart =        
+                        S.gracePeriod.isBefore(15) // now shift the shift start time accordingly 
                         
                         // the scheduled shift start
                         // make the grace localtime for before the shift
 
-                        // check if clock in before grace period
+                        if (this.punchTime.isBefore(S.gracePeriod))  // check if clock in before grace period
+
+
                         // if clock before punish]
                         // else adjust with rules
                 }
@@ -291,10 +122,10 @@ public class Punch {
 
                         // else check to see if punch is after Shift start
 
-                        if (this.punchTime.toLocalTime().isBefore(S.gracePeriod) //BAD CODE TRYING TO FIX
+                         //have to fix grace period
                                 
                 } 
-
+                
 
                         
                         // check if in shift start grace period
@@ -305,9 +136,13 @@ public class Punch {
 
                         // else punch right on time
                 // if clock out punch
+
+
                          // check if before shift clock out
                                  // check if in lunch grace period
                                 // check if in early clock out grace period
+
+
                          // check if after shift clock out
                                 // check if in late clock out grace period
         
@@ -362,4 +197,3 @@ public class Punch {
 
         }
 }
->>>>>>> e4b30ff2b8d57dca8e6b003dbe15e4167338b6f4
