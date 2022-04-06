@@ -19,8 +19,8 @@ public class TAS {
 
         // if minutes work is enough and only two punches add artificial lunch (minus
         // his lunch minutes for the shift)
-        Punch startPeriod = null;
-        Punch endPeriod = null;
+        Punch startPunch = null;
+        Punch endPunch = null;
         boolean isPair = false;
         int dailyMinutes = 0;
 
@@ -33,21 +33,33 @@ public class TAS {
             if (punch.getPunchtype() == PunchType.CLOCK_IN) {
 
                 // current start punchh = this punch
+                startPunch = punch;
             }
             // if clock out punch
             else if (punch.getPunchtype() == PunchType.CLOCK_OUT) {
 
                 // cuurrent end punchj = this punch
+                endPunch = punch;
+                if (startPunch != null || endPunch != null) {
+                    isPair = true;
+                }
             }
             // if time out punch
             else if (punch.getPunchtype() == PunchType.TIME_OUT) {
                 // renull the values
+                startPunch = null;
+                endPunch = null;
             }
             // todo end switch conversion
 
             if (isPair) {
                 // calucalte minute and add to counter
+
                 // renull the values
+                startPunch = null;
+                endPunch = null;
+                // make pair flag false again
+                isPair = false;
             }
 
             // if clock in and clock ouut not null then calculate minutes add to minute
