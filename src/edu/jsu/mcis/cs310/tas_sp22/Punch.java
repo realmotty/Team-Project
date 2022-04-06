@@ -1,7 +1,3 @@
-<<<<<<< HEAD
-=======
-
->>>>>>> 0be54989e06ddc29eba2ba609149cb2aaed07e7b
 package edu.jsu.mcis.cs310.tas_sp22;
 
 import java.time.LocalDate;
