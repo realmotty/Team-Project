@@ -124,50 +124,51 @@ public class TASDatabase {
 
     public ArrayList<Punch> getDailyPunchList(Badge badge, LocalDate date) {
 
-            ArrayList<Punch> punches = new ArrayList<>();
-               
-            ResultSet resultset = null;
-            boolean hasresults;
-            Punch result = null;
-            String query = null;
-            PreparedStatement pstSelect = null;
-                
+        ArrayList<Punch> punches = new ArrayList<>();
 
+        ResultSet resultset = null;
+        boolean hasresults;
+        Punch result = null;
+        String query = null;
+        PreparedStatement pstSelect = null;
 
-            try {
+        try {
 
-                query = "SELECT * DATE(`timestamp`) AS tsdate FROM event WHERE badgeid = ? HAVING tsdate = ? ORDER BY `timestamp`";
-                pstSelect = connection.prepareStatement(query);
-                pstSelect.setString(1, badge.getId());
-                pstSelect.setString(2, date.toString());
+            // query = "SELECT * FROM event e WHERE badgeid = "4E6E296E" AND timestamp =
+            // "2018-08-01 05:49:24";"
 
+            query = "SELECT * DATE(`timestamp`) AS tsdate FROM event WHERE badgeid = ? HAVING tsdate = ? ORDER BY `timestamp`";
+            pstSelect = connection.prepareStatement(query);
+            pstSelect.setString(1, badge.getId());
+            pstSelect.setString(2, date.toString());
 
-                hasresults = pstSelect.execute();
+            hasresults = pstSelect.execute();
 
-                if (hasresults) {
+            if (hasresults) {
 
-                    resultset = pstSelect.getResultSet();
+                resultset = pstSelect.getResultSet();
 
-                    while (resultset.next()) {
+                while (resultset.next()) {
 
-                        int id = resultset.getInt("id");
-                        Punch p = getPunch(id);
-                        punches.add(p);
-                         
-                    }
+                    int id = resultset.getInt("id");
+                    Punch p = getPunch(id);
+                    punches.add(p);
 
                 }
-                
-                else {
-                    
-                }
+
             }
-            catch (Exception e) { e.printStackTrace(); }
-            
-            
-            return punches;
-        
+
+            else { 
+
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
         }
+
+        return punches;
+
+    }
+
     /**
      * 
      * @param badgeId
@@ -512,5 +513,7 @@ public class TASDatabase {
         return c;
 
     }
+
+
 
 }

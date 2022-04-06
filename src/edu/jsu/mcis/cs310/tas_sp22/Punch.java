@@ -1,3 +1,4 @@
+
 package edu.jsu.mcis.cs310.tas_sp22;
 
 import java.time.LocalDate;
@@ -50,12 +51,10 @@ public class Punch {
 
                 /* default values */
 
-
                 this.punchTime = LocalDateTime.now().withNano(0);
                 this.adjustmentType = null;
                 this.ajustedPunchTime = null;
                 this.id = 0;
-
 
         }
 
@@ -67,6 +66,7 @@ public class Punch {
          * @param timestamp
          * @param punchTypeId
          */
+
         Punch(int id, int terminalId, String badgeid, LocalDateTime timestamp, int punchTypeId) {
                 this.id = id;
                 this.terminalId = terminalId;
@@ -87,6 +87,58 @@ public class Punch {
                                 this.punchType = null;
                 }
 
+        }
+
+        // adjust punch times
+        // todo for feature 4
+        /**
+         * Adjust Punch time based on company ruleset for early,late, and missed punches
+         * 
+         * @param S Shift to use for adjustment
+         */
+        public void adjust(Shift S) {
+
+                // Check type of punch
+                // if clock in punch:
+                // checking to see if punch in time is before Shift start
+
+                if (this.punchTime.toLocalTime().isBefore(S.shiftStart)) {
+
+                       // S.shiftStart =        
+                        S.gracePeriod = 15; 
+                        
+                        // the scheduled shift start
+                        // make the grace localtime for before the shift
+
+                        // check if clock in before grace period
+                        // if clock before punish]
+                        // else adjust with rules
+                }
+                else if (this.punchTime.toLocalTime().isAfter(S.shiftStart)){ 
+
+                        // else check to see if punch is after Shift start
+
+                        if (this.punchTime.toLocalTime().isBefore(S.gracePeriod) //BAD CODE TRYING TO FIX
+                                
+                } 
+
+
+                        
+                        // check if in shift start grace period
+                                // appropriate action
+
+                          // chekc if in lunch stop grace period
+                                // appropriate action
+
+                        // else punch right on time
+                // if clock out punch
+                         // check if before shift clock out
+                                 // check if in lunch grace period
+                                // check if in early clock out grace period
+                         // check if after shift clock out
+                                // check if in late clock out grace period
+        
+        
         }
 
         // Getters
@@ -110,7 +162,6 @@ public class Punch {
         public int getPunchtypeID() {
                 return punchTypeid;
         }
-
 
         @Override
         public String toString() {
