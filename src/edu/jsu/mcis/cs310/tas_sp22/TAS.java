@@ -53,13 +53,11 @@ public class TAS {
             // todo end switch conversion
 
             if (isPair) {
-                // calucalte minute and add to counter
-
-                // renull the values
+                dailyMinutes = (dailyMinutes/1000) *60;
                 startPunch = null;
                 endPunch = null;
-                // make pair flag false again
-                isPair = false;
+                isPair = false;                // make pair flag false again
+                
             }
 
             // if clock in and clock ouut not null then calculate minutes add to minute
