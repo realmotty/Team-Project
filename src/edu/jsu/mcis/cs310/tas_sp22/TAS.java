@@ -21,6 +21,7 @@ public class TAS {
         // his lunch minutes for the shift)
         Punch startPeriod = null;
         Punch endPeriod = null;
+        boolean isPair = false;
         int dailyMinutes = 0;
 
         // loop through all daily punches
@@ -44,7 +45,7 @@ public class TAS {
             }
             // todo end switch conversion
 
-            if (startPeriod != null || endPeriod != null) {
+            if (isPair) {
                 // calucalte minute and add to counter
                 // renull the values
             }
