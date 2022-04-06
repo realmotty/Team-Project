@@ -99,17 +99,20 @@ public class Punch {
 
                 // Check type of punch
                 if (this.punchType == PunchType.CLOCK_IN) {
+
                         // do something
+
                         // if clock in punch:
-                        // checking to see if punch in time is before Shift start
 
                         // Store adjusted timestamp into "adjustedtimestamp" = LocalDateTime
+
                         // Store a description of which rule triggers the adjustment in a String
 
-                        if (this.punchTime.toLocalTime().isBefore(S.shiftStart)) {
+                        if (this.punchTime.toLocalTime().isBefore(S.shiftStart)) { // checking to see if punch in time is before Shift start
 
-                                // S.shiftStart =
-                                // grace period for before shift
+
+                                 // grace period for before shift
+
                                 if (this.punchTime.toLocalTime().isBefore(S.shiftStart.minusMinutes(S.gracePeriod))) {
 
                                 }
@@ -120,9 +123,10 @@ public class Punch {
 
                                 // make the grace localtime for before the shift
 
-                                if (this.punchTime.isBefore(S.gracePeriod)) {
-                                } // check if clock in before grace period have to fix grace period in order to
-                                  // make error go away from .isbefore
+                                {
+                                } 
+                                
+                                // check if clock in before grace period
 
                                 // if clock before punish
 
@@ -133,7 +137,6 @@ public class Punch {
                         else if (this.punchTime.toLocalTime().isAfter(S.shiftStart)) { // else check to see if punch is
                                                                                        // after Shift start
 
-                                // have to fix grace period
 
                         }
 
@@ -150,25 +153,23 @@ public class Punch {
                         // else punch right on time
                 }
 
-                else if (this.punchType == PunchType.CLOCK_OUT) {
+                else if (this.punchType == PunchType.CLOCK_OUT) {  // check if punch type is clock out punch
 
-                        // if clock out punch
 
-                        if (this.punchTime.toLocalTime().isBefore(S.shiftStart)) {
+                        if (this.punchTime.toLocalTime().isBefore(S.shiftStop)) {
                         } // check if before shift clock out
 
                         if (this.punchTime.toLocalTime().isBefore(S.lunchStart)) {
                         } // check if in lunch grace period
 
-                        if (this.punchTime.toLocalTime().isBefore(S.gracePeriod)) {
+                        if (this.punchTime.toLocalTime().isBefore(S.shiftStop.minusMinutes(S.gracePeriod))) {
+
                         } // check if in early clock out grace period
 
-                        else if (this.punchTime.toLocalTime().isAfter(S.shiftStart)) {
+                        else if (this.punchTime.toLocalTime().isAfter(S.shiftStop)) {
                         } // check if after shift clock out
 
-                        if (this.punchTime.toLocalTime().isAfter(S.gracePeriod)) {
-                        } // check if in late clock out grace period, have to fix grace period in order to
-                          // make error go away from .isafter
+                        if (this.punchTime.toLocalTime().isAfter(S.shiftStop.minusMinutes(S.gracePeriod))) {} // check if in late clock out grace period
 
                 }
 
