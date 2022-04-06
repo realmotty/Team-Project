@@ -144,12 +144,13 @@ public class Punch {
                         // if clock out punch
                         
                         
-                        // check if before shift clock out
-                        // check if in lunch grace period
+                        if (this.punchTime.toLocalTime().isBefore(S.shiftStart)) { } // check if before shift clock out
+
+                        if (this.punchTime.toLocalTime().isBefore(S.lunchStart)  // check if in lunch grace period
                         // check if in early clock out grace period
                         
                         
-                        // check if after shift clock out
+                        else if (this.punchTime.toLocalTime().isAfter(S.shiftStart)){ } // check if after shift clock out
                         // check if in late clock out grace period
                         
                 }
