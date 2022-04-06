@@ -146,15 +146,18 @@ public class Punch {
                         
                         if (this.punchTime.toLocalTime().isBefore(S.shiftStart)) { } // check if before shift clock out
 
-                        if (this.punchTime.toLocalTime().isBefore(S.lunchStart)  // check if in lunch grace period
+                        if (this.punchTime.toLocalTime().isBefore(S.lunchStart)) { } // check if in lunch grace period
                         // check if in early clock out grace period
                         
                         
                         else if (this.punchTime.toLocalTime().isAfter(S.shiftStart)){ } // check if after shift clock out
-                        // check if in late clock out grace period
+
+                        if (this.punchTime.toLocalTime().isAfter(S.gracePeriod)) { } // check if in late clock out grace period
                         
                 }
+
                 //else this is timeout
+
                 else{
                         //timeout stuff
 
