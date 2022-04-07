@@ -224,4 +224,15 @@ public class Punch {
                 return result;
 
         }
+        public String printAdjusted() {
+                DateTimeFormatter format = DateTimeFormatter.ofPattern("EEE MM/dd/yyyy HH:mm:ss");
+
+                StringBuilder sb = new StringBuilder();
+                sb.append("#").append(badge.getId()).append(" ");
+                sb.append(punchType).append(": ");
+                sb.append(punchTime.format(format).toUpperCase());
+                String result = sb.toString();
+                return result;
+
+        }
 }
