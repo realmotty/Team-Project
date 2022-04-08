@@ -101,10 +101,10 @@ public class Punch {
 
                 } else if (this.punchType == PunchType.CLOCK_OUT) {
                         this.ajustedPunchTime = adjustClockOut(S);
+                } else {
+                        this.ajustedPunchTime = this.punchTime;
                 }
-                else{
-                        this.ajustedPunchTime = punchTime;
-                }
+        }
         /*
          * // Check type of punch
          * if (this.punchType == PunchType.CLOCK_IN) {
