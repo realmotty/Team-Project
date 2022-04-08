@@ -140,9 +140,8 @@ public class TASDatabase {
             query = "SELECT * FROM event e WHERE badgeid = ? AND timestamp BETWEEN ? AND ?";
             pstSelect = connection.prepareStatement(query);
             pstSelect.setString(1, badge.getId());
-            pstSelect.setTimestamp(2,java.sql.Timestamp.valueOf(date.atStartOfDay()));
-            pstSelect.setTimestamp(3,java.sql.Timestamp.valueOf(date.atTime(LocalTime.MAX)));
-            
+            pstSelect.setTimestamp(2, java.sql.Timestamp.valueOf(date.atStartOfDay()));
+            pstSelect.setTimestamp(3, java.sql.Timestamp.valueOf(date.atTime(LocalTime.MAX)));
 
             hasresults = pstSelect.execute();
 
@@ -151,10 +150,14 @@ public class TASDatabase {
                 resultset = pstSelect.getResultSet();
 
                 while (resultset.next()) {
+                    // test output
                     System.out.println("Pass");
+
                     int id = resultset.getInt("id");
                     Punch p = getPunch(id);
                     punches.add(p);
+
+                    // test output
                     System.out.println(p.toString());
 
                 }
