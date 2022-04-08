@@ -222,6 +222,8 @@ public class Punch {
                         } else {
                                 // round to next interval
                         }
+                } else {
+                        return this.punchTime;
                 }
         }
 
