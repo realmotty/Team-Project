@@ -120,8 +120,8 @@ public class Punch {
 
                                 // make the grace localtime for before the shift
 
-                                if (this.punchTime.isBefore(S.gracePeriod)) {
-                                } // check if clock in before grace period have to fix grace period in order to
+                                //if (this.punchTime.isBefore(S.gracePeriod)) {
+                                //} // check if clock in before grace period have to fix grace period in order to
                                   // make error go away from .isbefore
 
                                 // if clock before punish
@@ -156,14 +156,14 @@ public class Punch {
                         if (this.punchTime.toLocalTime().isBefore(S.lunchStart)) {
                         } // check if in lunch grace period
 
-                        if (this.punchTime.toLocalTime().isBefore(S.gracePeriod)) {
-                        } // check if in early clock out grace period
+                        //if (this.punchTime.toLocalTime().isBefore(S.gracePeriod)) {
+                        //} // check if in early clock out grace period
 
                         else if (this.punchTime.toLocalTime().isAfter(S.shiftStart)) {
                         } // check if after shift clock out
 
-                        if (this.punchTime.toLocalTime().isAfter(S.gracePeriod)) {
-                        } // check if in late clock out grace period, have to fix grace period in order to
+                        //if (this.punchTime.toLocalTime().isAfter(S.gracePeriod)) {
+                        //} // check if in late clock out grace period, have to fix grace period in order to
                           // make error go away from .isafter
 
                 }

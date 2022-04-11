@@ -137,10 +137,12 @@ public class TASDatabase {
             // query = "SELECT * FROM event e WHERE badgeid = "4E6E296E" AND timestamp =
             // "2018-08-01 05:49:24";"
 
-            query = "SELECT * DATE(`timestamp`) AS tsdate FROM event WHERE badgeid = ? HAVING tsdate = ? ORDER BY `timestamp`";
+            query = "SELECT *, DATE(`timestamp`) AS tsdate FROM event WHERE badgeid = ? HAVING tsdate = ? ORDER BY `timestamp`";
             pstSelect = connection.prepareStatement(query);
             pstSelect.setString(1, badge.getId());
             pstSelect.setString(2, date.toString());
+            
+            System.err.println(date.toString());
 
             hasresults = pstSelect.execute();
 
@@ -158,7 +160,9 @@ public class TASDatabase {
 
             }
             
-            query = "SELECT *, DATE(`timestamp`) AS tsdate FROM event WHERE badgeid='4E6E296E' HAVING tsdate>'2018-08-01' ORDER BY `timestamp` LIMIT 1";
+            pstSelect.close();
+            
+            query = "SELECT *, DATE(`timestamp`) AS tsdate FROM event WHERE badgeid = ? HAVING tsdate > ? ORDER BY `timestamp` LIMIT 1";
             pstSelect = connection.prepareStatement(query);
             pstSelect.setString(1, badge.getId());
             pstSelect.setString(2, date.toString());
