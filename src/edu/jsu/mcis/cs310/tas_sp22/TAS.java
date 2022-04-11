@@ -8,6 +8,7 @@ package edu.jsu.mcis.cs310.tas_sp22;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.time.Month;
+
 /**
  *
  * @author Jonathan Carter
@@ -54,9 +55,13 @@ public class TAS {
             // todo end switch conversion
 
             if (isPair) {
-                dailyMinutes = (dailyMinutes / 1000) * 60;
+                dailyMinutes += (int) (startPunch.punchTime.until(endPunch.punchTime, ChronoUnit.MINUTES));
+                /*
+                 * dailyMinutes = (dailyMinutes / 1000) * 60;
+                 */
                 startPunch = null;
                 endPunch = null;
+
                 isPair = false; // make pair flag false again
 
             }
