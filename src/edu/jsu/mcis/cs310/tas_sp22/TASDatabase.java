@@ -137,12 +137,11 @@ public class TASDatabase {
             // query = "SELECT * FROM event e WHERE badgeid = "4E6E296E" AND timestamp =
             // "2018-08-01 05:49:24";"
 
-            query = "SELECT *, DATE(`timestamp`) AS tsdate FROM event WHERE badgeid = ? HAVING tsdate = ? ORDER BY `timestamp`";
+            query = "SELECT * FROM event e WHERE badgeid = ? AND timestamp BETWEEN ? AND ?";
             pstSelect = connection.prepareStatement(query);
             pstSelect.setString(1, badge.getId());
-            pstSelect.setString(2, date.toString());
-            
-            System.err.println(date.toString());
+            pstSelect.setTimestamp(2, java.sql.Timestamp.valueOf(date.atStartOfDay()));
+            pstSelect.setTimestamp(3, java.sql.Timestamp.valueOf(date.atTime(LocalTime.MAX)));
 
             hasresults = pstSelect.execute();
 
@@ -151,39 +150,20 @@ public class TASDatabase {
                 resultset = pstSelect.getResultSet();
 
                 while (resultset.next()) {
+                    // test output
+                    System.out.println("Pass");
 
                     int id = resultset.getInt("id");
                     Punch p = getPunch(id);
                     punches.add(p);
 
-                }
-
-            }
-            
-            pstSelect.close();
-            
-            query = "SELECT *, DATE(`timestamp`) AS tsdate FROM event WHERE badgeid = ? HAVING tsdate > ? ORDER BY `timestamp` LIMIT 1";
-            pstSelect = connection.prepareStatement(query);
-            pstSelect.setString(1, badge.getId());
-            pstSelect.setString(2, date.toString());
-
-            hasresults = pstSelect.execute();
-
-            if (hasresults) {
-
-                resultset = pstSelect.getResultSet();
-
-                while (resultset.next()) {
-                    
-                    int id = resultset.getInt("id");
-                    Punch p = getPunch(id);
-                    punches.add(p);
+                    // test output
+                    System.out.println(p.toString());
 
                 }
 
             }
 
-            
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -536,7 +516,5 @@ public class TASDatabase {
         return c;
 
     }
-
-
 
 }
