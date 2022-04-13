@@ -4,10 +4,13 @@
  * and open the template in the editor.
  */
 package edu.jsu.mcis.cs310.tas_sp22;
-
+import java.util.ArrayList;
+import java.util.HashMap;
+import org.json.simple.*;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.time.Month;
+import java.util.Map;
 
 /**
  *
@@ -15,6 +18,32 @@ import java.time.Month;
  */
 public class TAS {
 
+    public static String getPunchListAsJSON(ArrayList<Punch> dailypunchlist){
+        
+         Map Punchmap =  String.valueOf();
+         JSONArray keyArray = new JSONArray();
+         JSONArray HeaderArray = new JSONArray();
+         JSONArray dataArray = new JSONArray();
+
+            int counter = 0;
+            while (iterator.hasNext()) {
+                String[] temp = iterator.next();
+                // first row is added to the columnHeaderArray
+                if (counter == 0) {
+                    for (String element : temp) {
+                        columnHeaderArray.add(element);
+                    }
+                }
+                    for (int i = 0; i < HeaderArray.size(); i++) {
+            
+            
+         }
+     
+            
+            }
+    }
+    
+            
     public static int calculateTotalMinutes(ArrayList<Punch> dailypunchlist, Shift shift) {
         // including lunch = 4 punches
         // not including lunch = 2 punches
