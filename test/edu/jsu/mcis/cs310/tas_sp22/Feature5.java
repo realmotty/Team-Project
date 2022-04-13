@@ -119,7 +119,7 @@ public class Feature5 {
 		
         /* Get Punch */
         
-        Punch p = db.getPunch(4943);
+        Punch p = db.getPunch(6081);
         Badge b = p.getBadge();
         Shift s = db.getShift(b);
         
