@@ -135,7 +135,7 @@ public class Feature5 {
 		
         /* Compare to Expected Value */
         
-        assertEquals(630, m);
+        assertEquals(5988, m);
         
     }
     
