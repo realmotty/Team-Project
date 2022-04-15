@@ -14,15 +14,6 @@ public class Employee {
     private final Integer departmentId;
     private final Integer shiftID;
     private final Integer employeeTypeId;
-
-    public LocalDateTime getActiveTime() {
-        return activeTime;
-    }
-
-    public LocalDateTime getInactiveTime() {
-        return inactiveTime;
-    }
-
     private final LocalDateTime activeTime;
     private final LocalDateTime inactiveTime;
 
@@ -31,6 +22,7 @@ public class Employee {
      * @param Input- Hash map containing the employee information
      */
     public Employee(HashMap<String, Object> Input) {
+
         this.employeeId = (Integer) Input.get("id");
         this.badgeid = (String) Input.get("badgeid");
         this.firstName = (String) Input.get("firstname");
@@ -43,6 +35,14 @@ public class Employee {
         this.activeTime = (LocalDateTime) Input.get("active");
         this.inactiveTime = (LocalDateTime) Input.get("inactive");
 
+    }
+
+    public LocalDateTime getActiveTime() {
+        return activeTime;
+    }
+
+    public LocalDateTime getInactiveTime() {
+        return inactiveTime;
     }
 
     public Integer getEmployeeId() {

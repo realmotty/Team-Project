@@ -6,20 +6,19 @@ import java.time.format.DateTimeFormatter;
 import java.time.temporal.*;
 
 public class Shift {
-    int id;
-    int roundInterval;
-    int gracePeriod;
-    int dockPenalty;
-    int lunchThreshold;
-    int shiftLength;
-    int lunchLength;
+    private int id;
+    private int roundInterval;
+    private int gracePeriod;
+    private int dockPenalty;
+    private int lunchThreshold;
+    private int shiftLength;
+    private int lunchLength;
 
-    String description;
-
-    LocalTime shiftStart;
-    LocalTime shiftStop;
-    LocalTime lunchStart;
-    LocalTime lunchStop;
+    private String description;
+    private LocalTime shiftStart;
+    private LocalTime shiftStop;
+    private LocalTime lunchStart;
+    private LocalTime lunchStop;
 
     public Shift(HashMap<String, Object> Input) {
         this.id = (Integer) Input.get("id");

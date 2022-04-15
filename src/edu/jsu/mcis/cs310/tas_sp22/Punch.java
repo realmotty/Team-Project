@@ -26,27 +26,31 @@ public class Punch {
          * @param badge
          * @param punchTypeId
          */
-        Punch(int terminalId, Badge badge, int punchTypeId) {
+        public Punch(int terminalId, Badge badge, int punchTypeId) {
 
                 this.terminalId = terminalId;
                 this.badge = badge;
                 this.punchTypeid = punchTypeId;
 
-                /* set punch type enum based of (int)punchTypeId */
-                switch (this.punchTypeid) {
+                this.punchType = PunchType.values()[punchTypeId];
 
-                        case 0:
-                                this.punchType = PunchType.CLOCK_OUT;
-                                break;
-                        case 1:
-                                this.punchType = PunchType.CLOCK_IN;
-                                break;
-                        case 2:
-                                this.punchType = PunchType.TIME_OUT;
-                                break;
-                        default:
-                                this.punchType = null;
-                }
+                /* set punch type enum based of (int)punchTypeId */
+                /*
+                 * switch (this.punchTypeid) {
+                 * 
+                 * case 0:
+                 * this.punchType = PunchType.CLOCK_OUT;
+                 * break;
+                 * case 1:
+                 * this.punchType = PunchType.CLOCK_IN;
+                 * break;
+                 * case 2:
+                 * this.punchType = PunchType.TIME_OUT;
+                 * break;
+                 * default:
+                 * this.punchType = null;
+                 * }
+                 */
 
                 /* default values */
 
@@ -66,25 +70,29 @@ public class Punch {
          * @param punchTypeId
          */
 
-        Punch(int id, int terminalId, String badgeid, LocalDateTime timestamp, int punchTypeId) {
+        public Punch(int id, int terminalId, String badgeid, LocalDateTime timestamp, int punchTypeId) {
                 this.id = id;
                 this.terminalId = terminalId;
                 this.badge = new Badge(badgeid);
                 this.punchTime = timestamp;
                 /* set punch type enum based of (int)punchTypeId */
-                switch (punchTypeId) {
-                        case 0:
-                                this.punchType = PunchType.CLOCK_OUT;
-                                break;
-                        case 1:
-                                this.punchType = PunchType.CLOCK_IN;
-                                break;
-                        case 2:
-                                this.punchType = PunchType.TIME_OUT;
-                                break;
-                        default:
-                                this.punchType = null;
-                }
+
+                this.punchType = PunchType.values()[punchTypeId];
+                /*
+                 * switch (punchTypeId) {
+                 * case 0:
+                 * this.punchType = PunchType.CLOCK_OUT;
+                 * break;
+                 * case 1:
+                 * this.punchType = PunchType.CLOCK_IN;
+                 * break;
+                 * case 2:
+                 * this.punchType = PunchType.TIME_OUT;
+                 * break;
+                 * default:
+                 * this.punchType = null;
+                 * }
+                 */
 
         }
 
