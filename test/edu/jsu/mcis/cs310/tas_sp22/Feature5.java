@@ -115,5 +115,29 @@ public class Feature5 {
         assertEquals(540, m);
         
     }
+    public void testMinutesAccruedShift3Weekday() {
+		
+        /* Get Punch */
+        
+        Punch p = db.getPunch(6081);
+        Badge b = p.getBadge();
+        Shift s = db.getShift(b);
+        
+        ArrayList<Punch> dailypunchlist = db.getDailyPunchList(b, p.getOriginalTimestamp().toLocalDate());
+        
+        for (Punch punch : dailypunchlist) {
+            punch.adjust(s);
+        }
+        
+        /* Compute Pay Period Total */
+        
+        int m = TAS.calculateTotalMinutes(dailypunchlist, s);
+		
+        /* Compare to Expected Value */
+        
+        assertEquals(720, m);
+        
+    }
     
 }
+    
