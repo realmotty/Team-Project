@@ -208,24 +208,24 @@ public class Punch {
          */
 
         private LocalDateTime adjustClockIn(Shift S) {
-                if (this.punchTime.toLocalTime().isBefore(S.shiftStart)) {
-                        if (checkInRoundInterval(S.roundInterval, S.shiftStart)) {
+                if (this.punchTime.toLocalTime().isBefore(S.getShiftStart())) {
+                        if (checkInRoundInterval(S.getRoundInterval(), S.getShiftStart())) {
                                 this.adjustmentType = "Shift Start";
                                 // adjusted time is set to the start of the shift
-                                return LocalDateTime.of(this.punchTime.toLocalDate(), S.shiftStart);
+                                return LocalDateTime.of(this.punchTime.toLocalDate(), S.getShiftStart());
                         } else {
                                 // round to next interval
                                 // todo ask about that in class
                         }
-                } else if (this.punchTime.toLocalTime().isAfter(S.shiftStart)) {
-                        if (checkInLunchBreak(S.lunchStart, S.lunchStop)) {
+                } else if (this.punchTime.toLocalTime().isAfter(S.getShiftStart())) {
+                        if (checkInLunchBreak(S.getLunchStart(), S.getLunchStop())) {
                                 this.adjustmentType = "Lunch Stop";
-                                return LocalDateTime.of(this.punchTime.toLocalDate(), S.lunchStop);
-                        } else if (checkInGracePeriod(S.gracePeriod, S.shiftStart)) {
+                                return LocalDateTime.of(this.punchTime.toLocalDate(), S.getLunchStop());
+                        } else if (checkInGracePeriod(S.getGracePeriod(), S.getShiftStart())) {
                                 this.adjustmentType = "Grace Period";
                                 // adjusted time is set to the start of the shift
-                                return LocalDateTime.of(this.punchTime.toLocalDate(), S.shiftStart);
-                        } else if (checkInDockPeriod(S.dockPenalty, S.shiftStart)) {
+                                return LocalDateTime.of(this.punchTime.toLocalDate(), S.getShiftStart());
+                        } else if (checkInDockPeriod(S.getDockPenalty(), S.getShiftStart())) {
                                 // dock penalty
                         } else {
                                 // round to next interval
@@ -235,7 +235,10 @@ public class Punch {
                 }
         }
 
-        private LocalDateTime adjustClockOut() {
+        private LocalDateTime adjustClockOut(Shift S) {
+                if (this.punchTime.toLocalTime().isBefore(S.getShiftStart())) {
+
+                }
 
         }
 

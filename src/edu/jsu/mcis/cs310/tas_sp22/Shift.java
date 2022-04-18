@@ -20,6 +20,54 @@ public class Shift {
     private LocalTime lunchStart;
     private LocalTime lunchStop;
 
+    public int getId() {
+        return id;
+    }
+
+    public int getRoundInterval() {
+        return roundInterval;
+    }
+
+    public int getGracePeriod() {
+        return gracePeriod;
+    }
+
+    public int getDockPenalty() {
+        return dockPenalty;
+    }
+
+    public int getLunchThreshold() {
+        return lunchThreshold;
+    }
+
+    public int getShiftLength() {
+        return shiftLength;
+    }
+
+    public int getLunchLength() {
+        return lunchLength;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public LocalTime getShiftStart() {
+        return shiftStart;
+    }
+
+    public LocalTime getShiftStop() {
+        return shiftStop;
+    }
+
+    public LocalTime getLunchStart() {
+        return lunchStart;
+    }
+
+    public LocalTime getLunchStop() {
+        return lunchStop;
+    }
+
     public Shift(HashMap<String, Object> Input) {
         this.id = (Integer) Input.get("id");
         this.description = (String) Input.get("description");
