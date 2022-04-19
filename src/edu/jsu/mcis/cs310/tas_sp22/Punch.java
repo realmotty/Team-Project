@@ -110,7 +110,7 @@ public class Punch {
                 } else if (this.punchType == PunchType.CLOCK_OUT) {
                         this.ajustedPunchTime = adjustClockOut(S);
                 } else {
-                        this.ajustedPunchTime = this.punchTime;
+                        adjsutRoundInterval(S, S.getRoundInterval());
                 }
         }
         /*
@@ -250,7 +250,14 @@ public class Punch {
 
         }
 
-        private boolean checkInRoundInterval(int intervalRound, LocalTime timePoint) {
+        private void adjsutRoundInterval(Shift S, int intervalRound) {
+                int minutes = this.punchTime.getMinute();
+                int timeToRoundInterval = minutes % S.getRoundInterval();
+                if (timeToRoundInterval > S.getRoundInterval() / 2) {
+                        this.ajustedPunchTime = this.punchTime.minusMinutes(timeToRoundInterval);
+                } else {
+                        this.ajustedPunchTime = this.punchTime.plusMinutes(S.getRoundInterval() - timeToRoundInterval);
+                }
 
         }
 
