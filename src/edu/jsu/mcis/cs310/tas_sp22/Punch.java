@@ -26,27 +26,31 @@ public class Punch {
          * @param badge
          * @param punchTypeId
          */
-        Punch(int terminalId, Badge badge, int punchTypeId) {
+        public Punch(int terminalId, Badge badge, int punchTypeId) {
 
                 this.terminalId = terminalId;
                 this.badge = badge;
                 this.punchTypeid = punchTypeId;
 
-                /* set punch type enum based of (int)punchTypeId */
-                switch (this.punchTypeid) {
+                this.punchType = PunchType.values()[punchTypeId];
 
-                        case 0:
-                                this.punchType = PunchType.CLOCK_OUT;
-                                break;
-                        case 1:
-                                this.punchType = PunchType.CLOCK_IN;
-                                break;
-                        case 2:
-                                this.punchType = PunchType.TIME_OUT;
-                                break;
-                        default:
-                                this.punchType = null;
-                }
+                /* set punch type enum based of (int)punchTypeId */
+                /*
+                 * switch (this.punchTypeid) {
+                 * 
+                 * case 0:
+                 * this.punchType = PunchType.CLOCK_OUT;
+                 * break;
+                 * case 1:
+                 * this.punchType = PunchType.CLOCK_IN;
+                 * break;
+                 * case 2:
+                 * this.punchType = PunchType.TIME_OUT;
+                 * break;
+                 * default:
+                 * this.punchType = null;
+                 * }
+                 */
 
                 /* default values */
 
@@ -66,25 +70,29 @@ public class Punch {
          * @param punchTypeId
          */
 
-        Punch(int id, int terminalId, String badgeid, LocalDateTime timestamp, int punchTypeId) {
+        public Punch(int id, int terminalId, String badgeid, LocalDateTime timestamp, int punchTypeId) {
                 this.id = id;
                 this.terminalId = terminalId;
                 this.badge = new Badge(badgeid);
                 this.punchTime = timestamp;
                 /* set punch type enum based of (int)punchTypeId */
-                switch (punchTypeId) {
-                        case 0:
-                                this.punchType = PunchType.CLOCK_OUT;
-                                break;
-                        case 1:
-                                this.punchType = PunchType.CLOCK_IN;
-                                break;
-                        case 2:
-                                this.punchType = PunchType.TIME_OUT;
-                                break;
-                        default:
-                                this.punchType = null;
-                }
+
+                this.punchType = PunchType.values()[punchTypeId];
+                /*
+                 * switch (punchTypeId) {
+                 * case 0:
+                 * this.punchType = PunchType.CLOCK_OUT;
+                 * break;
+                 * case 1:
+                 * this.punchType = PunchType.CLOCK_IN;
+                 * break;
+                 * case 2:
+                 * this.punchType = PunchType.TIME_OUT;
+                 * break;
+                 * default:
+                 * this.punchType = null;
+                 * }
+                 */
 
         }
 
@@ -102,7 +110,7 @@ public class Punch {
                 } else if (this.punchType == PunchType.CLOCK_OUT) {
                         this.ajustedPunchTime = adjustClockOut(S);
                 } else {
-                        this.ajustedPunchTime = this.punchTime;
+                        adjsutRoundInterval(S, S.getRoundInterval());
                 }
         }
         /*
@@ -200,24 +208,24 @@ public class Punch {
          */
 
         private LocalDateTime adjustClockIn(Shift S) {
-                if (this.punchTime.toLocalTime().isBefore(S.shiftStart)) {
-                        if (checkInRoundInterval(S.roundInterval, S.shiftStart)) {
+                if (this.punchTime.toLocalTime().isBefore(S.getShiftStart())) {
+                        if (checkInRoundInterval(S.getRoundInterval(), S.getShiftStart())) {
                                 this.adjustmentType = "Shift Start";
                                 // adjusted time is set to the start of the shift
-                                return LocalDateTime.of(this.punchTime.toLocalDate(), S.shiftStart);
+                                return LocalDateTime.of(this.punchTime.toLocalDate(), S.getShiftStart());
                         } else {
                                 // round to next interval
                                 // todo ask about that in class
                         }
-                } else if (this.punchTime.toLocalTime().isAfter(S.shiftStart)) {
-                        if (checkInLunchBreak(S.lunchStart, S.lunchStop)) {
+                } else if (this.punchTime.toLocalTime().isAfter(S.getShiftStart())) {
+                        if (checkInLunchBreak(S.getLunchStart(), S.getLunchStop())) {
                                 this.adjustmentType = "Lunch Stop";
-                                return LocalDateTime.of(this.punchTime.toLocalDate(), S.lunchStop);
-                        } else if (checkInGracePeriod(S.gracePeriod, S.shiftStart)) {
+                                return LocalDateTime.of(this.punchTime.toLocalDate(), S.getLunchStop());
+                        } else if (checkInGracePeriod(S.getGracePeriod(), S.getShiftStart())) {
                                 this.adjustmentType = "Grace Period";
                                 // adjusted time is set to the start of the shift
-                                return LocalDateTime.of(this.punchTime.toLocalDate(), S.shiftStart);
-                        } else if (checkInDockPeriod(S.dockPenalty, S.shiftStart)) {
+                                return LocalDateTime.of(this.punchTime.toLocalDate(), S.getShiftStart());
+                        } else if (checkInDockPeriod(S.getDockPenalty(), S.getShiftStart())) {
                                 // dock penalty
                         } else {
                                 // round to next interval
@@ -227,7 +235,10 @@ public class Punch {
                 }
         }
 
-        private LocalDateTime adjustClockOut() {
+        private LocalDateTime adjustClockOut(Shift S) {
+                if (this.punchTime.toLocalTime().isBefore(S.getShiftStart())) {
+
+                }
 
         }
 
@@ -239,7 +250,14 @@ public class Punch {
 
         }
 
-        private boolean checkInRoundInterval(int intervalRound, LocalTime timePoint) {
+        private void adjsutRoundInterval(Shift S, int intervalRound) {
+                int minutes = this.punchTime.getMinute();
+                int timeToRoundInterval = minutes % S.getRoundInterval();
+                if (timeToRoundInterval > S.getRoundInterval() / 2) {
+                        this.ajustedPunchTime = this.punchTime.minusMinutes(timeToRoundInterval);
+                } else {
+                        this.ajustedPunchTime = this.punchTime.plusMinutes(S.getRoundInterval() - timeToRoundInterval);
+                }
 
         }
 

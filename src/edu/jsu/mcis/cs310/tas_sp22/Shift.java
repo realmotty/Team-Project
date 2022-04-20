@@ -6,20 +6,67 @@ import java.time.format.DateTimeFormatter;
 import java.time.temporal.*;
 
 public class Shift {
-    int id;
-    int roundInterval;
-    int gracePeriod;
-    int dockPenalty;
-    int lunchThreshold;
-    int shiftLength;
-    int lunchLength;
+    private int id;
+    private int roundInterval;
+    private int gracePeriod;
+    private int dockPenalty;
+    private int lunchThreshold;
+    private int shiftLength;
+    private int lunchLength;
 
-    String description;
+    private String description;
+    private LocalTime shiftStart;
+    private LocalTime shiftStop;
+    private LocalTime lunchStart;
+    private LocalTime lunchStop;
 
-    LocalTime shiftStart;
-    LocalTime shiftStop;
-    LocalTime lunchStart;
-    LocalTime lunchStop;
+    public int getId() {
+        return id;
+    }
+
+    public int getRoundInterval() {
+        return roundInterval;
+    }
+
+    public int getGracePeriod() {
+        return gracePeriod;
+    }
+
+    public int getDockPenalty() {
+        return dockPenalty;
+    }
+
+    public int getLunchThreshold() {
+        return lunchThreshold;
+    }
+
+    public int getShiftLength() {
+        return shiftLength;
+    }
+
+    public int getLunchLength() {
+        return lunchLength;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public LocalTime getShiftStart() {
+        return shiftStart;
+    }
+
+    public LocalTime getShiftStop() {
+        return shiftStop;
+    }
+
+    public LocalTime getLunchStart() {
+        return lunchStart;
+    }
+
+    public LocalTime getLunchStop() {
+        return lunchStop;
+    }
 
     public Shift(HashMap<String, Object> Input) {
         this.id = (Integer) Input.get("id");

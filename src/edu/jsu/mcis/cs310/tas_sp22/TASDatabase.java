@@ -151,7 +151,7 @@ public class TASDatabase {
 
                 while (resultset.next()) {
                     // test output
-                    System.out.println("Pass");
+                    System.err.println("Pass");
 
                     int id = resultset.getInt("id");
                     Punch p = getPunch(id);

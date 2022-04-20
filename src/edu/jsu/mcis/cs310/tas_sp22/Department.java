@@ -5,7 +5,7 @@ public class Department {
         private final String description;
         private final int terminalId;
 
-        Department(int id, String description, int terminalId) {
+        public Department(int id, String description, int terminalId) {
                 this.id = id;
                 this.description = description;
                 this.terminalId = terminalId;
