@@ -5,6 +5,8 @@ import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 
+import javax.lang.model.util.ElementScanner14;
+
 public class Punch {
 
         private int id;
@@ -110,161 +112,9 @@ public class Punch {
                 } else if (this.punchType == PunchType.CLOCK_OUT) {
                         this.ajustedPunchTime = adjustClockOut(S);
                 } else {
-                        adjsutRoundInterval(S, S.getRoundInterval());
+                        this.ajustedPunchTime = this.punchTime;
                 }
         }
-        /*
-         * // Check type of punch
-         * if (this.punchType == PunchType.CLOCK_IN) {
-         * 
-         * // do something
-         * 
-         * // if clock in punch:
-         * 
-         * // Store adjusted timestamp into "adjustedtimestamp" = LocalDateTime
-         * 
-         * // Store a description of which rule triggers the adjustment in a String
-         * 
-         * if (this.punchTime.toLocalTime().isBefore(S.shiftStart)) { // checking to see
-         * if punch in time
-         * // is before Shift start
-         * 
-         * // grace period for before shift
-         * 
-         * if (this.punchTime.toLocalTime().isBefore(S.shiftStart.minusMinutes(S.
-         * gracePeriod))) {
-         * 
-         * }
-         * 
-         * // now shift the shift start time accordingly
-         * 
-         * // the scheduled shift start
-         * 
-         * // make the grace localtime for before the shift
-         * 
-         * {
-         * }
-         * 
-         * // check if clock in before grace period
-         * 
-         * // if clock before punish
-         * 
-         * // else adjust with rules
-         * 
-         * }
-         * 
-         * else if (this.punchTime.toLocalTime().isAfter(S.shiftStart)) { // else check
-         * to see if punch is
-         * // after Shift start
-         * 
-         * }
-         * 
-         * }
-         * 
-         * if (this.punchTime.toLocalTime().isBefore(S.shiftStart)) { // check if in
-         * shift start grace period
-         * // appropriate action
-         * 
-         * if (this.punchTime.toLocalTime().isBefore(S.lunchStop)) {
-         * } // chekc if in lunch stop grace period
-         * // appropriate action
-         * 
-         * // else punch right on time
-         * }
-         * 
-         * else if (this.punchType == PunchType.CLOCK_OUT) { // check if punch type is
-         * clock out punch
-         * 
-         * if (this.punchTime.toLocalTime().isBefore(S.shiftStop)) {
-         * } // check if before shift clock out
-         * 
-         * if (this.punchTime.toLocalTime().isBefore(S.lunchStart)) {
-         * } // check if in lunch grace period
-         * 
-         * if
-         * (this.punchTime.toLocalTime().isBefore(S.shiftStop.minusMinutes(S.gracePeriod
-         * ))) {
-         * 
-         * } // check if in early clock out grace period
-         * 
-         * else if (this.punchTime.toLocalTime().isAfter(S.shiftStop)) {
-         * } // check if after shift clock out
-         * 
-         * if
-         * (this.punchTime.toLocalTime().isAfter(S.shiftStop.minusMinutes(S.gracePeriod)
-         * )) {
-         * } // check if in late clock out grace period
-         * 
-         * }
-         * 
-         * // else this is code ran for the PunchType. timeout
-         * 
-         * else {
-         * // timeout stuff
-         * 
-         * }
-         * 
-         * }
-         */
-
-        private LocalDateTime adjustClockIn(Shift S) {
-                if (this.punchTime.toLocalTime().isBefore(S.getShiftStart())) {
-                        if (checkInRoundInterval(S.getRoundInterval(), S.getShiftStart())) {
-                                this.adjustmentType = "Shift Start";
-                                // adjusted time is set to the start of the shift
-                                return LocalDateTime.of(this.punchTime.toLocalDate(), S.getShiftStart());
-                        } else {
-                                // round to next interval
-                                // todo ask about that in class
-                        }
-                } else if (this.punchTime.toLocalTime().isAfter(S.getShiftStart())) {
-                        if (checkInLunchBreak(S.getLunchStart(), S.getLunchStop())) {
-                                this.adjustmentType = "Lunch Stop";
-                                return LocalDateTime.of(this.punchTime.toLocalDate(), S.getLunchStop());
-                        } else if (checkInGracePeriod(S.getGracePeriod(), S.getShiftStart())) {
-                                this.adjustmentType = "Grace Period";
-                                // adjusted time is set to the start of the shift
-                                return LocalDateTime.of(this.punchTime.toLocalDate(), S.getShiftStart());
-                        } else if (checkInDockPeriod(S.getDockPenalty(), S.getShiftStart())) {
-                                // dock penalty
-                        } else {
-                                // round to next interval
-                        }
-                } else {
-                        return this.punchTime;
-                }
-        }
-
-        private LocalDateTime adjustClockOut(Shift S) {
-                if (this.punchTime.toLocalTime().isBefore(S.getShiftStart())) {
-
-                }
-
-        }
-
-        private boolean checkInDockPeriod(int gracePeriodLength, LocalTime timePoint) {
-
-        }
-
-        private boolean checkInGracePeriod(int gracePeriodLength, LocalTime timePoint) {
-
-        }
-
-        private void adjsutRoundInterval(Shift S, int intervalRound) {
-                int minutes = this.punchTime.getMinute();
-                int timeToRoundInterval = minutes % S.getRoundInterval();
-                if (timeToRoundInterval > S.getRoundInterval() / 2) {
-                        this.ajustedPunchTime = this.punchTime.minusMinutes(timeToRoundInterval);
-                } else {
-                        this.ajustedPunchTime = this.punchTime.plusMinutes(S.getRoundInterval() - timeToRoundInterval);
-                }
-
-        }
-
-        private boolean checkInLunchBreak(LocalTime lunchStart, LocalTime lunchStop) {
-
-        }
-
         // Getters
 
         public Badge getBadge() {
@@ -286,6 +136,8 @@ public class Punch {
         public int getPunchtypeID() {
                 return punchTypeid;
         }
+
+        // String Output Methods
 
         @Override
         public String toString() {
@@ -324,4 +176,114 @@ public class Punch {
                 return result;
 
         }
+
+        /* Helper Functions */
+
+        // Begin Helper Functions For Adjust()
+        private LocalDateTime adjustClockIn(Shift S) {
+                LocalDateTime adjustmentResult = null;
+                LocalTime adjustmentTimeResult = null;
+
+                if (this.punchTime.toLocalTime().isBefore(S.getShiftStart())) {
+                        if (checkInRoundIntervalBeforeShift(S)) {
+                                this.adjustmentType = "Shift Start";
+                                // adjusted time is set to the start of the shift
+                                adjustmentTimeResult = S.getShiftStart();
+                        } else {
+                                // round to next interval
+                                this.adjustmentType = "Interval Round";
+                                adjustRoundInterval(S);
+                        }
+                } else if (this.punchTime.toLocalTime().isAfter(S.getShiftStart())) {
+                        if (checkInLunchBreak(S)) {
+                                this.adjustmentType = "Lunch Stop";
+                                adjustmentTimeResult = S.getLunchStop();
+                        } else if (checkInGracePeriod(S)) {
+                                this.adjustmentType = "Grace Period";
+                                // adjusted time is set to the start of the shift
+                                adjustmentTimeResult = S.getShiftStart();
+                        } else if (checkInDockPeriod(S)) {
+                                // dock penalty
+                        } else {
+                                // round to next interval
+                                adjustRoundInterval(S);
+
+                        }
+                } else {
+                        adjustmentTimeResult = this.punchTime.withNano(0).toLocalTime();
+                }
+
+                adjustmentResult = LocalDateTime.of(this.punchTime.toLocalDate(), adjustmentTimeResult);
+                return adjustmentResult;
+        }
+
+        private LocalDateTime adjustClockOut(Shift S) {
+                LocalDateTime adjustmentResult = null;
+                LocalTime adjustmentTimeResult = null;
+
+                if (this.punchTime.toLocalTime().isBefore(S.getShiftStop())) {
+                        if (checkInLunchBreak(S)) {
+
+                        } else if (checkInGracePeriod(S)) {
+
+                        } else if (checkInDockPeriod(S)) {
+
+                        } else {
+                                // interval round
+
+                        }
+
+                } else if (this.punchTime.toLocalTime().isAfter(S.getShiftStop()))
+                        if (checkInRoundIntervalAfterShift(S)) {
+                                // set to scheduled stop
+                        } else {
+                                adjustRoundInterval(S);
+                        }
+
+                else {
+                        adjustmentTimeResult = this.punchTime.withNano(0).toLocalTime();
+                }
+
+                adjustmentResult = LocalDateTime.of(this.punchTime.toLocalDate(), adjustmentTimeResult);
+                return adjustmentResult;
+        }
+
+        private LocalTime adjustRoundInterval(Shift S) {
+                LocalTime temp;
+                int minutes = this.punchTime.getMinute();
+                int timeToRoundInterval = minutes % S.getRoundInterval();
+                if (timeToRoundInterval > S.getRoundInterval() / 2) {
+                        temp = punchTime.minusMinutes(timeToRoundInterval).toLocalTime();
+                } else {
+                        temp = this.punchTime.plusMinutes(S.getRoundInterval() - timeToRoundInterval).toLocalTime();
+                }
+                return temp;
+
+        }
+
+        private boolean checkInRoundIntervalBeforeShift(Shift S) {
+
+        }
+
+        private boolean checkInRoundIntervalAfterShift(Shift S) {
+
+        }
+
+        private boolean checkInRoundInterval(Shift S) {
+
+        }
+
+        private boolean checkInDockPeriod(Shift S) {
+
+        }
+
+        private boolean checkInGracePeriod(Shift S) {
+
+        }
+
+        private boolean checkInLunchBreak(Shift S) {
+
+        }
+        // End Helper Functions For Adjust()
+
 }
