@@ -116,25 +116,39 @@ public class Punch {
         }
         // Getters
 
-        public Badge getBadge() {
-                return this.badge;
-        }
+    public int getId() {
+        return id;
+    }
 
-        public LocalDateTime getOriginalTimestamp() {
-                return this.punchTime;
-        }
+    public int getPunchTypeid() {
+        return punchTypeid;
+    }
 
-        public int getTerminalid() {
-                return this.terminalId;
-        }
+    public int getTerminalId() {
+        return terminalId;
+    }
 
-        public PunchType getPunchtype() {
-                return this.punchType;
-        }
+    public Badge getBadge() {
+        return badge;
+    }
 
-        public int getPunchtypeID() {
-                return punchTypeid;
-        }
+    public String getAdjustmentType() {
+        return adjustmentType;
+    }
+
+    public LocalDateTime getPunchTime() {
+        return punchTime;
+    }
+
+    public LocalDateTime getAjustedPunchTime() {
+        return ajustedPunchTime;
+    }
+
+    public PunchType getPunchType() {
+        return punchType;
+    }
+
+        
 
         // String Output Methods
 
