@@ -111,44 +111,42 @@ public class Punch {
                 } else if (this.punchType == PunchType.CLOCK_OUT) {
                         this.ajustedPunchTime = adjustClockOut(S);
                 } else {
-                        this.ajustedPunchTime = this.punchTime;
+                        this.ajustedPunchTime = this.punchTime.withNano(0);
                 }
         }
         // Getters
 
-    public int getId() {
-        return id;
-    }
+        public int getId() {
+                return id;
+        }
 
-    public int getPunchTypeid() {
-        return punchTypeid;
-    }
+        public int getPunchTypeid() {
+                return punchTypeid;
+        }
 
-    public int getTerminalId() {
-        return terminalId;
-    }
+        public int getTerminalId() {
+                return terminalId;
+        }
 
-    public Badge getBadge() {
-        return badge;
-    }
+        public Badge getBadge() {
+                return badge;
+        }
 
-    public String getAdjustmentType() {
-        return adjustmentType;
-    }
+        public String getAdjustmentType() {
+                return adjustmentType;
+        }
 
-    public LocalDateTime getPunchTime() {
-        return punchTime;
-    }
+        public LocalDateTime getPunchTime() {
+                return punchTime;
+        }
 
-    public LocalDateTime getAjustedPunchTime() {
-        return ajustedPunchTime;
-    }
+        public LocalDateTime getAjustedPunchTime() {
+                return ajustedPunchTime;
+        }
 
-    public PunchType getPunchType() {
-        return punchType;
-    }
-
-        
+        public PunchType getPunchType() {
+                return punchType;
+        }
 
         // String Output Methods
 
