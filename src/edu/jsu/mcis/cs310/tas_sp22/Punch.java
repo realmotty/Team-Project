@@ -1,11 +1,10 @@
 package edu.jsu.mcis.cs310.tas_sp22;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 
-import javax.lang.model.util.ElementScanner14;
+import javax.swing.text.html.HTMLDocument.RunElement;
 
 public class Punch {
 
@@ -261,27 +260,81 @@ public class Punch {
 
         }
 
+        /*
+         * Boolean Helper Functions for AdjustClockIn, AdjustClockOut, and
+         * AdjsutRoundInterval functions
+         */
         private boolean checkInRoundIntervalBeforeShift(Shift S) {
+                boolean result = false;
+                LocalTime clockpunch = this.punchTime.toLocalTime().withNano(0);
+                LocalTime startOfShift = S.getShiftStart().withNano(0);
+                LocalTime beginOfIntervalBeforeShift = startOfShift.minusMinutes(S.getRoundInterval()).withNano(0);
+
+                if (clockpunch.isAfter(beginOfIntervalBeforeShift) || clockpunch == beginOfIntervalBeforeShift) {
+                        result = true;
+                }
+
+                return result;
 
         }
 
         private boolean checkInRoundIntervalAfterShift(Shift S) {
+                boolean result = false;
+                LocalTime clockpunch = this.punchTime.toLocalTime().withNano(0);
+                LocalTime endOfShift = S.getShiftStop().withNano(0);
+                LocalTime endOfIntervalAfterShift = endOfShift.plusMinutes(S.getRoundInterval()).withNano(0);
 
-        }
+                if (clockpunch.isBefore(endOfIntervalAfterShift) || clockpunch == endOfIntervalAfterShift) {
+                        result = true;
+                }
 
-        private boolean checkInRoundInterval(Shift S) {
+                return result;
 
         }
 
         private boolean checkInDockPeriod(Shift S) {
+                boolean result = false;
+
+                LocalTime clockpunch = this.punchTime.toLocalTime().withNano(0);
+                LocalTime shiftStart = S.getShiftStart().withNano(0);
+                LocalTime endDockTime = shiftStart.plusMinutes(S.getDockPenalty());
+                LocalTime endGracePeriod = shiftStart.plusMinutes(S.getGracePeriod());
+
+                if (clockpunch.isAfter(endGracePeriod) && clockpunch.isBefore(endDockTime)
+                                || clockpunch == endDockTime) {
+                        result = true;
+                }
+                return result;
 
         }
 
         private boolean checkInGracePeriod(Shift S) {
+                boolean result = false;
+                LocalTime clockpunch = this.punchTime.toLocalTime().withNano(0);
 
+                LocalTime shiftStart = S.getShiftStart().withNano(0);
+                LocalTime endGracePeriod = shiftStart.plusMinutes(S.getGracePeriod());
+
+                if (clockpunch.isBefore(endGracePeriod) || clockpunch == endGracePeriod) {
+                        result = true;
+                }
+
+                return result;
         }
 
         private boolean checkInLunchBreak(Shift S) {
+                boolean result = false;
+                LocalTime lunchStart = S.getLunchStart();
+                LocalTime lunchEnd = S.getLunchStop();
+                LocalTime clockpunch = this.punchTime.toLocalTime().withNano(0);
+
+                if (clockpunch.isAfter(lunchStart) && clockpunch.isBefore(lunchEnd)) {
+                        result = true;
+                }
+                if (clockpunch == lunchStart || clockpunch == lunchEnd) {
+                        result = true;
+                }
+                return result;
 
         }
         // End Helper Functions For Adjust()
