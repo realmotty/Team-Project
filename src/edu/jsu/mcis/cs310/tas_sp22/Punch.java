@@ -124,7 +124,7 @@ public class Punch {
                 return punchTypeid;
         }
 
-        public int getTerminalId() {
+        public int getTerminalid() {
                 return terminalId;
         }
 
@@ -136,7 +136,7 @@ public class Punch {
                 return adjustmentType;
         }
 
-        public LocalDateTime getPunchTime() {
+        public LocalDateTime getOriginalTimestamp() {
                 return punchTime;
         }
 
@@ -144,7 +144,7 @@ public class Punch {
                 return ajustedPunchTime;
         }
 
-        public PunchType getPunchType() {
+        public PunchType getPunchtype() {
                 return punchType;
         }
 

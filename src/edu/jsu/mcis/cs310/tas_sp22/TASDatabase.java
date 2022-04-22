@@ -45,7 +45,7 @@ public class TASDatabase {
 
                 pstUpdate.setTimestamp(3, java.sql.Timestamp.valueOf(p.getOriginalTimestamp()));
 
-                pstUpdate.setInt(4, p.getPunchtypeID());
+                pstUpdate.setInt(4, p.getPunchTypeid());
 
                 /* Execute Insert Query */
                 int rowsAffected = pstUpdate.executeUpdate();
