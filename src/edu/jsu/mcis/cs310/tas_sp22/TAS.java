@@ -10,14 +10,14 @@ import org.json.simple.*;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.time.Month;
-<<<<<<< HEAD
+
 import java.util.Map;
-=======
+
 import java.util.HashMap;
 import java.time.format.DateTimeFormatter;
 import java.time.temporal.*;
 
->>>>>>> 2ffe4990d548b61e85f6bbae6c98d8929084194c
+
 
 /**
  *
@@ -68,13 +68,13 @@ public class TAS {
             // see what kind of punch
             // if clock in punch
             // todo replace with switch statement
-            if (punch.getPunchtype() == PunchType.CLOCK_IN) {
+            if (punch.getPunchType() == PunchType.CLOCK_IN) {
 
                 // current start punchh = this punch
                 startPunch = punch;
             }
             // if clock out punch
-            else if (punch.getPunchtype() == PunchType.CLOCK_OUT) {
+            else if (punch.getPunchType() == PunchType.CLOCK_OUT) {
 
                 // cuurrent end punchj = this punch
                 endPunch = punch;
@@ -83,7 +83,7 @@ public class TAS {
                 }
             }
             // if time out punch
-            else if (punch.getPunchtype() == PunchType.TIME_OUT) {
+            else if (punch.getPunchType() == PunchType.TIME_OUT) {
                 // renull the values
                 startPunch = null;
                 endPunch = null;
@@ -91,7 +91,7 @@ public class TAS {
             // todo end switch conversion
 
             if (isPair) {
-                dailyMinutes += (int) (startPunch.punchTime.until(endPunch.punchTime, ChronoUnit.MINUTES));
+                dailyMinutes += (int) (startPunch.getPunchTime().until(endPunch.getPunchTime(), ChronoUnit.MINUTES));
                 /*
                  * dailyMinutes = (dailyMinutes / 1000) * 60;
                  */
