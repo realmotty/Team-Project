@@ -62,13 +62,13 @@ public class TAS {
             // see what kind of punch
             // if clock in punch
             // todo replace with switch statement
-            if (punch.getPunchType() == PunchType.CLOCK_IN) {
+            if (punch.getPunchtype() == PunchType.CLOCK_IN) {
 
                 // current start punchh = this punch
                 startPunch = punch;
             }
             // if clock out punch
-            else if (punch.getPunchType() == PunchType.CLOCK_OUT) {
+            else if (punch.getPunchtype() == PunchType.CLOCK_OUT) {
 
                 // cuurrent end punchj = this punch
                 endPunch = punch;
@@ -77,7 +77,7 @@ public class TAS {
                 }
             }
             // if time out punch
-            else if (punch.getPunchType() == PunchType.TIME_OUT) {
+            else if (punch.getPunchtype() == PunchType.TIME_OUT) {
                 // renull the values
                 startPunch = null;
                 endPunch = null;
@@ -85,8 +85,11 @@ public class TAS {
             // todo end switch conversion
 
             if (isPair) {
-                dailyMinutes += (int) (startPunch.getPunchTime().until(endPunch.getPunchTime(), ChronoUnit.MINUTES));
-                /*
+                int temp ;
+                
+                        temp= (int) (startPunch.getAjustedPunchTime().until(endPunch.getAjustedPunchTime(), ChronoUnit.MINUTES));
+                dailyMinutes +=temp;
+                        /*
                  * dailyMinutes = (dailyMinutes / 1000) * 60;
                  */
                 startPunch = null;

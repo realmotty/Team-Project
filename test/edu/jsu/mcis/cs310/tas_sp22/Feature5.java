@@ -26,9 +26,12 @@ public class Feature5 {
         Shift s = db.getShift(b);
         
         ArrayList<Punch> dailypunchlist = db.getDailyPunchList(b, p.getOriginalTimestamp().toLocalDate());
+        ArrayList<Punch> temp;
+        Punch t;
         
         for (Punch punch : dailypunchlist) {
-            punch.adjust(s);
+            
+          punch.adjust(s);
         }
 		
         /* Compute Pay Period Total */

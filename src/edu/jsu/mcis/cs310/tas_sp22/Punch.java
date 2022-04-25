@@ -114,7 +114,11 @@ public class Punch {
                         this.ajustedPunchTime = this.punchTime.withNano(0);
                 }
         }
+
         // Getters
+        public LocalDateTime getPunchTime() {
+                return punchTime;
+        }
 
         public int getId() {
                 return id;
