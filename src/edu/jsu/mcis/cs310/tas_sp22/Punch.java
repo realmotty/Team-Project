@@ -217,6 +217,8 @@ public class Punch {
                                 adjustmentTimeResult = S.getShiftStart();
                         } else if (checkInDockPeriod(S)) {
                                 // dock penalty
+                                this.adjustmentType = "Shift Dock";
+                                adjustmentTimeResult = S.getShiftStart().plusMinutes(S.getDockPenalty());
                         } else {
                                 // round to next interval
                                 adjustmentTimeResult = adjustRoundInterval(S);
@@ -236,15 +238,20 @@ public class Punch {
 
                 if (this.punchTime.toLocalTime().isBefore(S.getShiftStop())) {
                         if (checkInLunchBreak(S)) {
+                                this.adjustmentType = "Lunch Start";
+                                adjustmentTimeResult = S.getLunchStart();
 
                         } else if (checkInGracePeriod(S)) {
-                            adjustmentTimeResult = S.getShiftStart();
-                            this.adjustmentType = "Interval Round";
+                                adjustmentTimeResult = S.getShiftStop();
+                                this.adjustmentType = "Shift Stop";
 
                         } else if (checkInDockPeriod(S)) {
-                            adjustmentTimeResult = S.getShiftStart().plusMinutes(S.getDockPenalty());
+                                this.adjustmentType = "Shift Dock";
+                                adjustmentTimeResult = S.getShiftStop().minusMinutes(S.getDockPenalty());
                         } else {
                                 // interval round
+                                this.adjustmentType = "Interval Round";
+
                                 adjustmentTimeResult = adjustRoundInterval(S);
 
                         }
@@ -253,6 +260,7 @@ public class Punch {
                         if (checkInRoundIntervalAfterShift(S)) {
                                 // set to scheduled stop
                                 adjustmentTimeResult = S.getShiftStop();
+                                this.adjustmentType = "Shift Stop";
                         } else {
                                 adjustmentTimeResult = adjustRoundInterval(S);
                         }
@@ -269,18 +277,17 @@ public class Punch {
                 LocalTime temp;
                 int minutes = this.punchTime.getMinute();
                 int timeToRoundInterval = minutes % S.getRoundInterval();
-                if(timeToRoundInterval == 0){
-                    temp = punchTime.toLocalTime().withNano(0);
-                     this.adjustmentType = "None";
-                }
-                else if (timeToRoundInterval < S.getRoundInterval() / 2) {
+                if (timeToRoundInterval == 0) {
+                        temp = punchTime.toLocalTime().withNano(0);
+                        this.adjustmentType = "None";
+                } else if (timeToRoundInterval < S.getRoundInterval() / 2) {
                         temp = punchTime.minusMinutes(timeToRoundInterval).toLocalTime();
-                         this.adjustmentType = "Interval Round";
+                        this.adjustmentType = "Interval Round";
                 } else {
                         temp = this.punchTime.plusMinutes(S.getRoundInterval() - timeToRoundInterval).toLocalTime();
-                         this.adjustmentType = "Interval Round";
+                        this.adjustmentType = "Interval Round";
                 }
-               
+
                 return temp.withSecond(0);
 
         }
@@ -322,12 +329,28 @@ public class Punch {
 
                 LocalTime clockpunch = this.punchTime.toLocalTime().withNano(0);
                 LocalTime shiftStart = S.getShiftStart().withNano(0);
-                LocalTime endDockTime = shiftStart.plusMinutes(S.getDockPenalty());
-                LocalTime endGracePeriod = shiftStart.plusMinutes(S.getGracePeriod());
+                LocalTime shiftStop = S.getShiftStop();
 
-                if (clockpunch.isAfter(endGracePeriod) && clockpunch.isBefore(endDockTime)
-                                || clockpunch == endDockTime) {
-                        result = true;
+                if (this.punchType == punchType.CLOCK_IN) {
+
+                        LocalTime endDockTime = shiftStart.plusMinutes(S.getDockPenalty());
+                        LocalTime endGracePeriod = shiftStart.plusMinutes(S.getGracePeriod());
+
+                        if ((clockpunch.isAfter(endGracePeriod) && clockpunch.isBefore(endDockTime))
+                                        || clockpunch == endDockTime) {
+                                result = true;
+                        }
+                }
+
+                if (this.punchType == punchType.CLOCK_OUT) {
+                        LocalTime endDockTime = shiftStop.minusMinutes(S.getDockPenalty());
+                        LocalTime endGracePeriod = shiftStop.minusMinutes(S.getGracePeriod());
+
+                        if (clockpunch.isBefore(endGracePeriod) && clockpunch.isAfter(endDockTime)) {
+                                result = true;
+                        } else if (clockpunch.compareTo(endDockTime) == 0) {
+                                result = true;
+                        }
                 }
                 return result;
 
@@ -338,12 +361,24 @@ public class Punch {
                 LocalTime clockpunch = this.punchTime.toLocalTime().withNano(0);
 
                 LocalTime shiftStart = S.getShiftStart().withNano(0);
-                LocalTime endGracePeriod = shiftStart.plusMinutes(S.getGracePeriod());
+                LocalTime shiftStop = S.getShiftStop();
+                if (this.punchType == PunchType.CLOCK_IN) {
 
-                if (clockpunch.isBefore(endGracePeriod) || clockpunch == endGracePeriod) {
-                        result = true;
+                        LocalTime endGracePeriod = shiftStart.plusMinutes(S.getGracePeriod());
+
+                        if (clockpunch.isBefore(endGracePeriod) || clockpunch == endGracePeriod) {
+                                result = true;
+                        }
                 }
+                if (this.punchType == PunchType.CLOCK_OUT) {
 
+                        LocalTime endGracePeriod = shiftStop.minusMinutes(S.getGracePeriod());
+
+                        if (clockpunch.isAfter(endGracePeriod) || clockpunch == endGracePeriod) {
+                                result = true;
+                        }
+
+                }
                 return result;
         }
 

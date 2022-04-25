@@ -73,7 +73,7 @@ public class Feature4 {
         assertEquals("#F1EE0555 CLOCK IN: SAT 08/11/2018 06:00:00 (Interval Round)", p1.printAdjusted());
         
         assertEquals("#F1EE0555 CLOCK OUT: SAT 08/11/2018 12:04:02", p2.printOriginal());
-        assertEquals("#F1EE0555 CLOCK OUT: SAT 08/11/2018 12:00:00 (Interval Round)", p2.printAdjusted());
+        assertEquals("#F1EE0555 CLOCK OUT: SAT 08/11/2018 12:00:00 (Lunch Start)", p2.printAdjusted());
         
     }
     
@@ -159,7 +159,7 @@ public class Feature4 {
         assertEquals("#BE51FA92 CLOCK IN: WED 08/01/2018 07:00:00 (Shift Start)", p1.printAdjusted());
         
         assertEquals("#3DA8B226 CLOCK IN: FRI 08/24/2018 07:02:23", p2.printOriginal());
-        assertEquals("#3DA8B226 CLOCK IN: FRI 08/24/2018 07:00:00 (Shift Start)", p2.printAdjusted());
+        assertEquals("#3DA8B226 CLOCK IN: FRI 08/24/2018 07:00:00 (Grace Period)", p2.printAdjusted());
 
         assertEquals("#8E5F0240 CLOCK IN: MON 08/27/2018 07:08:57", p3.printOriginal());
         assertEquals("#8E5F0240 CLOCK IN: MON 08/27/2018 07:15:00 (Shift Dock)", p3.printAdjusted());
