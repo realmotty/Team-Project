@@ -182,7 +182,9 @@ public class Punch {
                 StringBuilder sb = new StringBuilder();
                 sb.append("#").append(badge.getId()).append(" ");
                 sb.append(punchType).append(": ");
-                sb.append(punchTime.format(format).toUpperCase());
+                sb.append(this.ajustedPunchTime.withNano(0).format(format).toUpperCase());
+                sb.append(" (").append(this.adjustmentType).append(")");
+
                 String result = sb.toString();
                 return result;
 
@@ -203,7 +205,7 @@ public class Punch {
                         } else {
                                 // round to next interval
                                 this.adjustmentType = "Interval Round";
-                                adjustRoundInterval(S);
+                                adjustmentTimeResult = adjustRoundInterval(S);
                         }
                 } else if (this.punchTime.toLocalTime().isAfter(S.getShiftStart())) {
                         if (checkInLunchBreak(S)) {
@@ -217,7 +219,7 @@ public class Punch {
                                 // dock penalty
                         } else {
                                 // round to next interval
-                                adjustRoundInterval(S);
+                                adjustmentTimeResult = adjustRoundInterval(S);
 
                         }
                 } else {
@@ -236,19 +238,23 @@ public class Punch {
                         if (checkInLunchBreak(S)) {
 
                         } else if (checkInGracePeriod(S)) {
+                            adjustmentTimeResult = S.getShiftStart();
+                            this.adjustmentType = "Interval Round";
 
                         } else if (checkInDockPeriod(S)) {
-
+                            adjustmentTimeResult = S.getShiftStart().plusMinutes(S.getDockPenalty());
                         } else {
                                 // interval round
+                                adjustmentTimeResult = adjustRoundInterval(S);
 
                         }
 
                 } else if (this.punchTime.toLocalTime().isAfter(S.getShiftStop()))
                         if (checkInRoundIntervalAfterShift(S)) {
                                 // set to scheduled stop
+                                adjustmentTimeResult = S.getShiftStop();
                         } else {
-                                adjustRoundInterval(S);
+                                adjustmentTimeResult = adjustRoundInterval(S);
                         }
 
                 else {
@@ -263,12 +269,19 @@ public class Punch {
                 LocalTime temp;
                 int minutes = this.punchTime.getMinute();
                 int timeToRoundInterval = minutes % S.getRoundInterval();
-                if (timeToRoundInterval > S.getRoundInterval() / 2) {
+                if(timeToRoundInterval == 0){
+                    temp = punchTime.toLocalTime().withNano(0);
+                     this.adjustmentType = "None";
+                }
+                else if (timeToRoundInterval < S.getRoundInterval() / 2) {
                         temp = punchTime.minusMinutes(timeToRoundInterval).toLocalTime();
+                         this.adjustmentType = "Interval Round";
                 } else {
                         temp = this.punchTime.plusMinutes(S.getRoundInterval() - timeToRoundInterval).toLocalTime();
+                         this.adjustmentType = "Interval Round";
                 }
-                return temp;
+               
+                return temp.withSecond(0);
 
         }
 

@@ -25,7 +25,7 @@ public class Feature4 {
         Punch p2 = db.getPunch(3687);
         Punch p3 = db.getPunch(3688);
         Punch p4 = db.getPunch(3716);
-		
+		System.err.println(p1.printOriginal());
         /* Adjust Punches According to Shift Rulesets */
         
         p1.adjust(s1);
@@ -33,6 +33,9 @@ public class Feature4 {
         p3.adjust(s1);
         p4.adjust(s1);
 		
+		System.err.println(p1.printAdjusted());
+
+
         /* Compare Adjusted Timestamps to Expected Values */
         
         assertEquals("#28DC3FB8 CLOCK IN: FRI 09/07/2018 06:50:35", p1.printOriginal());
@@ -82,11 +85,12 @@ public class Feature4 {
         Shift s2 = db.getShift(2);
 
         Punch p1 = db.getPunch(4943);
+        p1.adjust(s2);
+
         Punch p2 = db.getPunch(5004);
 		
         /* Adjust Punches According to Shift Rulesets */
         
-        p1.adjust(s2);
         p2.adjust(s2);
         
         /* Compare Adjusted Timestamps to Expected Values */
@@ -111,7 +115,7 @@ public class Feature4 {
 		
         /* Adjust Punches According to Shift Rulesets */
         
-        p1.adjust(s2);
+       p1.adjust(s2);
         p2.adjust(s2);
 		
         /* Compare Adjusted Timestamps to Expected Values */
